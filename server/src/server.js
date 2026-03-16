@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectToDatabase } from "./config/db.js";
 
+import postRoutes from './features/posts/posts.routes.js';
 import userRoutes from './features/users/users.routes.js';
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(express.static("client")); // Serve static files
 
 app.use("/api/user", userRoutes);
+app.use("/api/posts", postRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

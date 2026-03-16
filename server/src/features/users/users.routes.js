@@ -3,7 +3,7 @@ import * as usersController from "./users.controller.js";
 
 const router = express.Router();
 
-// Browse users 
+// User Login
 router.post("/login", usersController.userLogin);
 
 export default router;
