@@ -113,3 +113,61 @@ export async function listChannelPosts(channelID, limit = 20, start = 0) {
         }
     }
 }
+
+export async function getPostById(id) {
+    try {
+        const db = getDatabase();
+
+        const post = await db.collection("posts").findOne({ postID: id });
+        if (post === null) {
+            return {error: true, status: 404};
+        };
+
+        const comments = await db.collection("comments").find({ postID: id }).toArray();
+        const postData = {
+            post: post,
+            comments: comments,
+            status: 200,
+            error: false
+        };
+
+        return postData;
+    } catch (error) {
+        return {error: true, status: 500};
+    }
+}
+
+export async function likedPosts(userID) {
+    try {
+        const db = getDatabase();
+
+        const user = await db.collection("users").findOne({ userID: userID });
+        if (user === null) {
+            return {error: true, status: 404};
+        };
+
+        const userLikes = await db
+            .collection("likes")
+            .find({ userID: userID, likeNotation: 1 })
+            .toArray();
+
+        if (userLikes.length === 0) {
+            return { posts: [], error: false, status: 200 };
+        }
+
+        const postIDs = new Set();
+        for (const like of userLikes) {
+            postIDs.add(like.postID);
+        }
+
+        const userLikedPosts = await db
+            .collection("posts")
+            .find({ postID: { $in: [...postIDs] } })
+            .toArray();
+        return {
+            posts: userLikedPosts, error: false, status: 200
+        }
+    } catch (error) {
+        return {error: true, status: 500};
+    }
+}

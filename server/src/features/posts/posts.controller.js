@@ -56,3 +56,41 @@ export async function viewChannelPosts(req, res) {
         });
     }
 }
+
+export async function viewPostById(req, res) {
+    try {
+        const {id} = req.params;
+        const postData = await postsService.getPostById(id);
+
+        if (postData.error === true && postData.status === 404) {
+            return res.status(404).json({"error": true, "message":"Post not found"});
+        }
+
+        return res.status(200).json({
+            "postData": postData,
+            "message":"Post Information Fetched."
+        });
+    } catch (error) {
+        return res.status(500).json({"error": true, "message":"Internal Server Error"});
+    }
+}
+
+export async function userLikedPosts(req, res) {
+    try {
+        const {userID} = req.params;
+
+        const likedPosts = await postsService.likedPosts(userID);
+        if (likedPosts.error === true && likedPosts.status === 404) {
+            return res.status(404).json({"error":true, "message":"user not found"});
+        }
+
+        const posts = likedPosts.posts;
+        if (posts.length === 0) {
+            return res.status(200).json({"error":false, "message":"No Liked Posts yet"});
+        }
+
+        return res.status(200).json({"error":false, "posts":posts});
+    } catch(error) {
+        return res.status(500).json({"error":true, "message":"internal server error"});
+    }
+}
