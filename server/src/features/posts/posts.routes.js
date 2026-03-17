@@ -10,6 +10,6 @@ router.get('/get-posts-in-channel/:channelID', postController.viewChannelPosts);
 router.get('/get-liked-posts/:userID', postController.userLikedPosts);
 
 // Create a Post
-//router.post('/create-a-post', postController.createPost);
+router.post('/create-a-post', postController.createPost);
 
 export default router;

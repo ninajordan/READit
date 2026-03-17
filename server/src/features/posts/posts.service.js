@@ -13,7 +13,7 @@ async function getNextPostID() {
         return "001";
     }
 
-    const lastIdNumber = parseInt(lastPost[0].userID, 10);
+    const lastIdNumber = parseInt(lastPost[0].postID, 10);
     const incrementedId = lastIdNumber + 1;
 
     return incrementedId.toString().padStart(3, "0");
@@ -41,7 +41,7 @@ export async function listAllPosts(limit = 20, start = 0) {
         const end = Math.min(start + limit, allPosts.length);
         const postsToSend = allPosts.slice(start, end);
 
-        for (const i = 0; i < postsToSend.length; i++) {
+        for (let i = 0; i < postsToSend.length; i++) {
             const postBody = postsToSend[i].postBody;
             const preview = createPreview(postBody);
             postsToSend[i]['preview'] = preview;
@@ -87,7 +87,7 @@ export async function listChannelPosts(channelID, limit = 20, start = 0) {
         const end = Math.min(start + limit, allPosts.length);
         const postsToSend = allPosts.slice(start, end);
 
-        for (const i = 0; i < postsToSend.length; i++) {
+        for (let i = 0; i < postsToSend.length; i++) {
             const postBody = postsToSend[i].postBody;
             const preview = createPreview(postBody);
             postsToSend[i]['preview'] = preview;
@@ -169,5 +169,43 @@ export async function likedPosts(userID) {
         }
     } catch (error) {
         return {error: true, status: 500};
+    }
+}
+
+export async function createPostObject(title, body, poster_id, channelID) {
+    try {
+        const db = getDatabase();
+        const postID = await getNextPostID();
+
+        const user = await db.collection("users").findOne({userID: poster_id});
+        if (user === null) {
+            return {
+                error: true,
+                status: 404,
+                message: "User not found"
+            };
+        }
+
+        const newPost = {
+            postID: postID,
+            postTitle: title,
+            postBody: body,
+            posterID: poster_id,
+            channelID: channelID
+        };
+
+        const added = await db.collection("posts").insertOne(newPost);
+        return {
+            error: false,
+            status: 201,
+            postData: newPost,
+            message: "Post created successfully"
+        }
+    } catch (error) {
+        return {
+            error: true,
+            status: 500,
+            message: String(error)
+        };
     }
 }

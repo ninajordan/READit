@@ -94,3 +94,26 @@ export async function userLikedPosts(req, res) {
         return res.status(500).json({"error":true, "message":"internal server error"});
     }
 }
+
+export async function createPost(req, res) {
+    try {
+        const {title, body, poster_id, channelID} = req.body;
+
+        if (channelID === "-1") {
+            channelID = null
+        }
+
+        const postCreated = await postsService.createPostObject(title, body, poster_id, channelID);
+        if (postCreated.error === true) {
+            res.status(postCreated.status).json({"error":true, "message":postCreated.message});
+        }
+
+        const response = {
+            "message": "Post created successfully",
+            "post": postCreated.postData
+        };
+        res.status(201).json({"error":false, "message":response.message, "post":response});
+    } catch (error) {
+        res.status(500).json({"error":true, "message":String(error)});
+    }
+}
