@@ -191,6 +191,7 @@ export async function createPostObject(title, body, poster_id, channelID) {
             postTitle: title,
             postBody: body,
             posterID: poster_id,
+            numLikes: 0,
             channelID: channelID
         };
 
