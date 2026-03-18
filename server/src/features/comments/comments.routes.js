@@ -3,6 +3,6 @@ import * as commentsController from "./comments.controller.js";
 
 const router = express.Router()
 
-router.post("post-comment", commentsController.writeComment);
+router.post("/post-comment", commentsController.writeComment);
 
 export default router;

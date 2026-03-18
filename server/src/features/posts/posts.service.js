@@ -41,10 +41,20 @@ export async function listAllPosts(limit = 20, start = 0) {
         const end = Math.min(start + limit, allPosts.length);
         const postsToSend = allPosts.slice(start, end);
 
+        const userIDs = postsToSend.map(p => p.posterID);
+
+        const users = await db.collection("users").find({userID: {$in: userIDs}}).toArray();
+        console.log("[DEBUG] fetched users: ", users);
+        const userMap = {}
+        for (const user of users) {
+            userMap[user.userID] = user.user_anonymity;
+        }
+
         for (let i = 0; i < postsToSend.length; i++) {
             const postBody = postsToSend[i].postBody;
             const preview = createPreview(postBody);
             postsToSend[i]['preview'] = preview;
+            postsToSend[i]['posterName'] = userMap[postsToSend[i]['posterID']];
         }
 
         const response = {
@@ -87,10 +97,19 @@ export async function listChannelPosts(channelID, limit = 20, start = 0) {
         const end = Math.min(start + limit, allPosts.length);
         const postsToSend = allPosts.slice(start, end);
 
+        const userIDs = postsToSend.map(p => p.posterID);
+
+        const users = await db.collection("users").find({userID: {$in: userIDs}}).toArray();
+        const userMap = {}
+        for (const user of users) {
+            userMap[user.userID] = user.user_anonymity;
+        }
+
         for (let i = 0; i < postsToSend.length; i++) {
             const postBody = postsToSend[i].postBody;
             const preview = createPreview(postBody);
             postsToSend[i]['preview'] = preview;
+            postsToSend[i]['posterName'] = userMap[postsToSend[i]['posterID']];
         }
 
         const response = {
@@ -123,7 +142,24 @@ export async function getPostById(id) {
             return {error: true, status: 404};
         };
 
+        const posterID = post.posterID;
+        const user = await db.collection("users").findOne({userID: posterID});
+        const posterName = user.anonymity;
+        post.posterName = posterName;
         const comments = await db.collection("comments").find({ postID: id }).toArray();
+        
+        const userIDs = comments.map(c => c.userID);
+
+        const users = await db.collection("users").find({userID: {$in: userIDs}}).toArray();
+        const userMap = {}
+        for (const user of users) {
+            userMap[user.userID] = user.user_anonymity;
+        }
+
+        for (let i = 0; i < comments.length; i ++) {
+            comments[i].posterName = userMap[comments[i].userID];
+        }
+
         const postData = {
             post: post,
             comments: comments,
