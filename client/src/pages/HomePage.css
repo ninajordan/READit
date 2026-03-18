@@ -1,0 +1,67 @@
+.home-page {
+  background: radial-gradient(circle at top, #fdf6ec 0%, #f3e6d2 55%, #e4d6c0 100%);
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.home-page__content {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  flex: 1;
+}
+
+.home-page__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem 4vw;
+}
+
+.home-page__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.home-page__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2vw + 1.6rem, 2.8rem);
+  margin: 0;
+  color: var(--accent-deep);
+}
+
+.home-page__subtitle {
+  color: var(--text-muted-dark);
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.home-page__meta {
+  color: var(--text-muted-dark);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.home-page__status {
+  color: var(--text-muted-dark);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.home-page__status--error {
+  color: #b3413a;
+}
+
+@media (max-width: 900px) {
+  .home-page__content {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page__main {
+    padding: 2.5rem 6vw 3rem;
+  }
+}

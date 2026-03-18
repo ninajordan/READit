@@ -1,0 +1,53 @@
+.comment-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 27, 27, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.9rem 1.1rem;
+}
+
+.comment-card__header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.comment-card__poster {
+  color: var(--text-muted-dark);
+  font-size: 0.75rem;
+  letter-spacing: 0.12rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.comment-card__like {
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0;
+}
+
+.comment-card__heart {
+  color: #d05757;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.comment-card__likes {
+  color: var(--text-muted-dark);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.comment-card__content {
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  margin: 0;
+}

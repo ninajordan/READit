@@ -1,0 +1,10 @@
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.comment-list__empty {
+  color: var(--text-muted-dark);
+  margin: 0;
+}

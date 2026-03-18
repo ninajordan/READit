@@ -1,0 +1,101 @@
+.post-stack {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.post-stack__frame {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  width: min(640px, 100%);
+}
+
+.post-stack__cards {
+  position: relative;
+  width: min(560px, 100%);
+  min-height: 260px;
+}
+
+.post-stack__arrow {
+  background: transparent;
+  border: 1px solid rgba(27, 27, 27, 0.25);
+  border-radius: 12px;
+  color: var(--text-dark);
+  cursor: pointer;
+  font-size: 1.2rem;
+  height: 44px;
+  width: 44px;
+}
+
+.post-stack__arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.post-stack__card {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.post-stack__card--0 {
+  transform: translateY(0) scale(1);
+  z-index: 3;
+}
+
+.post-stack__card--1 {
+  transform: translateY(16px) scale(0.97);
+  opacity: 0.85;
+  z-index: 2;
+}
+
+.post-stack__card--2 {
+  transform: translateY(32px) scale(0.94);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.post-stack__card--swipe-left {
+  transform: translateX(-120%) rotate(-6deg);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.post-stack__card--swipe-right {
+  transform: translateX(120%) rotate(6deg);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.post-stack__actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  width: min(560px, 100%);
+}
+
+.post-stack__button {
+  background: var(--accent);
+  border: none;
+  border-radius: 999px;
+  color: #1b1b1b;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+}
+
+.post-stack__button--ghost {
+  background: transparent;
+  border: 1px solid rgba(27, 27, 27, 0.2);
+}
+
+.post-stack__empty {
+  color: var(--text-muted-dark);
+  font-size: 0.95rem;
+  margin: 0;
+}

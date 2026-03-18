@@ -5,7 +5,11 @@ import { connectToDatabase } from "./config/db.js";
 
 import postRoutes from './features/posts/posts.routes.js';
 import userRoutes from './features/users/users.routes.js';
-import channelsRoutes from './features/channels/channels.routes.js';
+import commentRoutes from './features/comments/comments.routes.js';
+import channelRoutes from './features/channels/channels.routes.js';
+import likeRoutes from './features/likes/likes.routes.js';
+
+
 
 dotenv.config();
 
@@ -19,7 +23,6 @@ app.use(express.static("client")); // Serve static files
 
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postRoutes);
-app.use("/api/channels", channelsRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

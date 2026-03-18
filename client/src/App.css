@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;700&display=swap");
+
+:root {
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "Space Grotesk", "Helvetica Neue", sans-serif;
+  --text-dark: #1b1b1b;
+  --text-muted-dark: #4b4b4b;
+  --text-on-dark: #f5f5f5;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --panel-dark: #0f1112;
+  --panel-light: #ffffff;
+  --accent: #f7b267;
+  --accent-deep: #b34d2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: #fdf6ec;
+}
+
+button,
+input {
+  font-family: inherit;
+}
