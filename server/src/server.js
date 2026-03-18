@@ -5,6 +5,7 @@ import { connectToDatabase } from "./config/db.js";
 
 import postRoutes from './features/posts/posts.routes.js';
 import userRoutes from './features/users/users.routes.js';
+import channelsRoutes from './features/channels/channels.routes.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.static("client")); // Serve static files
 
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/channels", channelsRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {
@@ -28,13 +30,15 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
+
 
 app.get("/", (req, res) => {
   res.send("Server running");
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
 
 // Start server
