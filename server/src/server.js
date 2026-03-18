@@ -9,8 +9,6 @@ import commentRoutes from './features/comments/comments.routes.js';
 import channelRoutes from './features/channels/channels.routes.js';
 import likeRoutes from './features/likes/likes.routes.js';
 
-
-
 dotenv.config();
 
 const app = express();
@@ -23,6 +21,9 @@ app.use(express.static("client")); // Serve static files
 
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
+app.use("/api/channels", channelRoutes);
+app.use("/api/likes", likeRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {
@@ -33,15 +34,13 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-
-
-app.get("/", (req, res) => {
-  res.send("Server running");
-});
-
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
+});
+
+app.get("/", (req, res) => {
+  res.send("Server running");
 });
 
 // Start server
