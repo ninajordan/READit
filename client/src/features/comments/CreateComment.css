@@ -1,0 +1,27 @@
+.create-comment {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.create-comment__input {
+  flex: 1;
+  border: 1px solid rgba(27, 27, 27, 0.2);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+}
+
+.create-comment__input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.create-comment__button {
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #1b1b1b;
+  font-weight: 600;
+  padding: 0.65rem 1.2rem;
+  cursor: pointer;
+}

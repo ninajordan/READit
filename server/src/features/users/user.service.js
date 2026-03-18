@@ -40,7 +40,7 @@ export async function newUser(name) {
         const newUserObject = {
             userID: nextId,
             name: name,
-            user_anonymoty: user_anonymity,
+            user_anonymity: user_anonymity,
         };
 
         await db.collection("users").insertOne(newUserObject);
