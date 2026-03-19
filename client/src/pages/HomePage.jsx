@@ -40,7 +40,6 @@ export default function HomePage() {
     try {
       const userID = sessionStorage.getItem("userID");
       const result = await registerLike({
-      const result = await registerLike({
         parentID: post.postID,
         userID,
         likeNotation: 1,

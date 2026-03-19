@@ -1,43 +1,74 @@
 import { useNavigate } from "react-router-dom";
-import { useChannels } from "../hooks/useChannels.js";
+import { useChannels } from "../features/channels/useChannels.js";
 import "./Sidebar.css";
 
-export default function Sidebar({ onChannelSelect }) {
-  const { channels, status, error } = useChannels();
+export default function Sidebar() {
   const navigate = useNavigate();
+  const { channels, loading, error } = useChannels();
 
-  function handleHomeClick() {
-    sessionStorage.removeItem("channelID");
-    navigate("/");
+  function getChannelId(channel) {
+    return channel.channelID || channel._id || channel.id;
   }
 
+  function getChannelName(channel) {
+    return channel.channelName || channel.name || "Untitled";
+  }
+
+  function handleChannelClick(channel) {
+    const channelId = channel.channelID || channel._id || channel.id;
+    if (!channelId) return;
+  
+    sessionStorage.setItem("channelID", channelId);
+    navigate("/channels");
+  }
   return (
     <aside className="sidebar">
-      <button type="button" className="sidebar__home" onClick={handleHomeClick}>
+      <button
+        type="button"
+        className="sidebar__home"
+        onClick={() => navigate("/")}
+      >
         ⌂
       </button>
+
       <div className="sidebar__brand">READit</div>
+
       <div className="sidebar__section">
-        <p className="sidebar__label">Channels</p>
-        {status === "loading" ? (
+        <button
+          type="button"
+          className="sidebar__channels-button"
+          onClick={() => navigate("/channels")}
+        >
+          Channels
+        </button>
+
+        {loading ? (
           <p className="sidebar__status">Loading channels...</p>
         ) : null}
-        {status === "error" ? (
+
+        {error ? (
           <p className="sidebar__status sidebar__status--error">{error}</p>
         ) : null}
+
         <ul className="sidebar__list">
-          {channels.map((channel) => (
-            <li key={channel.channelID} className="sidebar__item">
-              <button
-                type="button"
-                className="sidebar__link"
-                data-channel-id={channel.channelID}
-                onClick={() => onChannelSelect?.(channel)}
-              >
-                #{channel.channelName}
-              </button>
-            </li>
-          ))}
+          {channels.map((channel) => {
+            const channelId = getChannelId(channel);
+            const channelName = getChannelName(channel);
+
+            if (!channelId) return null;
+
+            return (
+              <li key={channelId} className="sidebar__item">
+                <button
+                  type="button"
+                  className="sidebar__link"
+                  onClick={() => handleChannelClick(channel)}
+                >
+                  #{channelName}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </aside>

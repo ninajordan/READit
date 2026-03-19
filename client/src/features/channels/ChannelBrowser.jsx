@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useChannels } from "./useChannels.js";
 import "./ChannelBrowser.css";
 
 const FALLBACK_HERO =
   "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1600&q=80";
 
-const CHANNEL_VISUALS = {
+  const CHANNEL_VISUALS = {
   General: {
     heroImage:
       "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80",
@@ -175,6 +175,7 @@ const FALLBACK_POSTS = {
 };
 
 export default function ChannelBrowser() {
+    const navigate = useNavigate();
     const { channels: rawChannels, loading, error } = useChannels();
     const channels = Array.isArray(rawChannels)
       ? rawChannels
@@ -183,7 +184,7 @@ export default function ChannelBrowser() {
         : [];
   const [selectedChannelId, setSelectedChannelId] = useState(null);
   const [dismissedPostIds, setDismissedPostIds] = useState([]);
-
+  
   useEffect(() => {
     if (!channels.length) return;
     if (selectedChannelId) return;
@@ -278,14 +279,7 @@ export default function ChannelBrowser() {
         </aside>
 
         <main className="channel-browser-v2__main">
-          <div className="channel-browser-v2__browser-bar">
-            <div className="channel-browser-v2__browser-dots">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="channel-browser-v2__browser-url">readit.com</div>
-          </div>
+          
 
           {selectedChannel && (
             <>
@@ -298,12 +292,11 @@ export default function ChannelBrowser() {
                 }}
               >
                 <button
-                  type="button"
-                  className="channel-browser-v2__menu-button"
-                  aria-label="Open menu"
-                >
-                  ☰
-                </button>
+  className="channel__home-button"
+  onClick={() => navigate("/")}
+>
+  ← Home
+</button>
 
                 <div className="channel-browser-v2__hero-overlay">
                   <h1 className="channel-browser-v2__hero-title">
@@ -351,7 +344,14 @@ export default function ChannelBrowser() {
                   >
                     💬
                   </Link>
-
+                  
+                  <Link
+                    to={`/channels/${selectedChannel.channelID || selectedChannel._id || selectedChannel.id}/edit`}
+                    className="channel-browser-v2__action channel-browser-v2__action--edit"
+                    aria-label="Edit channel"
+                    >
+                    ✎
+                    </Link>
                   <button
                     type="button"
                     className="channel-browser-v2__action channel-browser-v2__action--approve"

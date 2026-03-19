@@ -139,7 +139,24 @@
   justify-content: center;
   padding: 2rem;
 }
-
+.channel__home-button {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 20;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  cursor: pointer;
+}
+.channel-browser-v2__hero {
+  position: relative;
+}
+.channel__home-button {
+  z-index: 20;
+}
 .channel-browser-v2__hero-title {
   margin: 0;
   color: white;

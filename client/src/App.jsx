@@ -6,20 +6,27 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import CreatePage from "./pages/CreatePage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import ChannelBrowser from "./features/channels/ChannelBrowser.jsx";
+import CreateChannelPage from "./pages/CreateChannelPage.jsx";
+import EditChannelPage from "./pages/EditChannelPage.jsx";
+import ChannelDetailPage from "./pages/ChannelDetailPage.jsx";
 
 function RequireAuth({ children }) {
   const userID = sessionStorage.getItem("userID");
+
   if (!userID) {
     return <Navigate to="/login" replace />;
   }
+
   return children;
 }
 
 function RedirectIfLoggedIn({ children }) {
   const userID = sessionStorage.getItem("userID");
+
   if (userID) {
     return <Navigate to="/" replace />;
   }
+
   return children;
 }
 
@@ -43,6 +50,7 @@ function App() {
             </RedirectIfLoggedIn>
           }
         />
+
         <Route
           path="/"
           element={
@@ -68,6 +76,30 @@ function App() {
           }
         />
         <Route
+          path="/channels/create"
+          element={
+            <RequireAuth>
+              <CreateChannelPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/channels/:id/edit"
+          element={
+            <RequireAuth>
+              <EditChannelPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/channels/:id"
+          element={
+            <RequireAuth>
+              <ChannelDetailPage />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="/profile"
           element={
             <RequireAuth>
@@ -75,6 +107,7 @@ function App() {
             </RequireAuth>
           }
         />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

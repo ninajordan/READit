@@ -18,13 +18,15 @@ export function useChannels(initialFilters = {}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const loadChannels = useCallback(async (overrideFilters = filters) => {
+  const loadChannels = useCallback(async (overrideFilters) => {
     try {
       setLoading(true);
       setError("");
 
-      const data = await fetchChannels(overrideFilters);
-      setChannels(data);
+      const activeFilters = overrideFilters ?? filters;
+      const data = await fetchChannels(activeFilters);
+
+      setChannels(Array.isArray(data?.channels) ? data.channels : Array.isArray(data) ? data : []);
     } catch (err) {
       setError(err.message || "Failed to load channels");
     } finally {
@@ -33,8 +35,8 @@ export function useChannels(initialFilters = {}) {
   }, [filters]);
 
   useEffect(() => {
-    loadChannels(filters);
-  }, [filters, loadChannels]);
+    loadChannels();
+  }, [loadChannels]);
 
   const updateFilters = useCallback((newFilters) => {
     setFilters((prev) => ({
@@ -69,7 +71,7 @@ export function useHomepageChannels() {
       setError("");
 
       const data = await fetchHomepageChannels();
-      setChannels(data);
+      setChannels(Array.isArray(data?.channels) ? data.channels : Array.isArray(data) ? data : []);
     } catch (err) {
       setError(err.message || "Failed to load homepage channels");
     } finally {
@@ -102,7 +104,7 @@ export function useChannel(id) {
       setError("");
 
       const data = await fetchChannelById(id);
-      setChannel(data);
+      setChannel(data?.channel ?? data);
     } catch (err) {
       setError(err.message || "Failed to load channel");
     } finally {
