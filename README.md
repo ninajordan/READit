@@ -14,10 +14,8 @@ https://johnguerra.co/classes/webDevelopment_online_spring_2026/
 ## Project Objective
 
 READit is a full-stack web application designed to allow anonymous, community discussion through channel grouped or random content. The platform enables users to discover, post, and contribute to conversations in an intuitive and immersive way.
-
-At the core of READit is a swipe-based interaction model: users browse posts by swiping left to skip or right to life. Any user can contribute to posts through commenting sharing their options and saving the post to their profile to revisit
-
-The application is built with a React front end leveraging modern hooks and component-based architecture, paired with a scalable Node.js and Express backend. MongoDB Atlas is used for flexible, cloud-based data persistence.
+Users browse posts by choosing dislike or like. Any user can contribute to posts through commenting sharing their options and saving the post to their profile to revisit
+The application is built with a React front end hooks and component-based architecture, paired with a scalable Node.js and Express backend. MongoDB Atlas .
 
 ## Features
 
