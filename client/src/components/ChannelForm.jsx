@@ -5,7 +5,8 @@ export default function ChannelForm({
     channelName: "",
     channelDescription: "",
     channelCategory: "",
-    Homepage: false,
+    bannerImage: "",
+    showOnHomepage: false,
   },
   onSubmit,
   submitLabel = "Create Channel",
@@ -26,13 +27,12 @@ export default function ChannelForm({
     setError("");
 
     try {
-      const userID = sessionStorage.getItem("userID");
-      const userAnonymity = sessionStorage.getItem("user_anonymity");
-
       const payload = {
-        ...formData,
-        createdBy: userID,
-        createdByAnonymity: userAnonymity,
+        channelName: formData.channelName,
+        channelDescription: formData.channelDescription,
+        channelCategory: formData.channelCategory,
+        bannerImage: formData.bannerImage,
+        showOnHomepage: formData.showOnHomepage,
       };
 
       await onSubmit(payload);
@@ -42,52 +42,72 @@ export default function ChannelForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{submitLabel}</h2>
-
-      {error ? <p>{error}</p> : null}
-
-      <label>
+    <form className="create-post" onSubmit={handleSubmit}>
+      <label className="create-post__label" htmlFor="channel-name">
         Channel Name
-        <input
-          type="text"
-          name="channelName"
-          value={formData.channelName}
-          onChange={handleChange}
-          required
-        />
       </label>
+      <input
+        id="channel-name"
+        className="create-post__input"
+        type="text"
+        name="channelName"
+        value={formData.channelName}
+        onChange={handleChange}
+        required
+      />
 
-      <label>
-        Description
-        <textarea
-          name="channelDescription"
-          value={formData.channelDescription}
-          onChange={handleChange}
-        />
+      <label className="create-post__label" htmlFor="channel-description">
+        Channel Description
       </label>
+      <textarea
+        id="channel-description"
+        className="create-post__textarea"
+        name="channelDescription"
+        value={formData.channelDescription}
+        onChange={handleChange}
+        rows={4}
+      />
 
-      <label>
-        Category
-        <input
-          type="text"
-          name="channelCategory"
-          value={formData.channelCategory}
-          onChange={handleChange}
-        />
+      <label className="create-post__label" htmlFor="channel-banner">
+        Banner Image
       </label>
+      <input
+        id="channel-banner"
+        className="create-post__input"
+        type="text"
+        name="bannerImage"
+        placeholder="Image URL"
+        value={formData.bannerImage}
+        onChange={handleChange}
+      />
 
-      <label>
-        Show on Homepage
+      <label className="create-post__label" htmlFor="channel-category">
+        Channel Category
+      </label>
+      <input
+        id="channel-category"
+        className="create-post__input"
+        type="text"
+        name="channelCategory"
+        maxLength={50}
+        value={formData.channelCategory}
+        onChange={handleChange}
+      />
+
+      <label className="create-post__checkbox">
         <input
           type="checkbox"
-          name="Homepage"
-          checked={formData.Homepage}
+          name="showOnHomepage"
+          checked={formData.showOnHomepage}
           onChange={handleChange}
         />
+        Homepage channel?
       </label>
 
-      <button type="submit">{submitLabel}</button>
+      <button className="create-post__button" type="submit">
+        {submitLabel}
+      </button>
+      {error ? <p className="create-post__error">{error}</p> : null}
     </form>
   );
 }

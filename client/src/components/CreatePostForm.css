@@ -44,6 +44,14 @@
   padding: 0.7rem 1.5rem;
 }
 
+.create-post__checkbox {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
 .create-post__error {
   color: #b3413a;
   font-size: 0.9rem;

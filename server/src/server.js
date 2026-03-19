@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // API routes
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/channels", channelRoutes);

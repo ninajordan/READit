@@ -40,6 +40,12 @@
   margin: 0;
 }
 
+.create-page__note {
+  color: var(--text-muted-dark);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
 @media (max-width: 900px) {
   .create-page__content {
     grid-template-columns: 1fr;

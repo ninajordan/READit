@@ -17,16 +17,19 @@ export default function Sidebar() {
   function handleChannelClick(channel) {
     const channelId = channel.channelID || channel._id || channel.id;
     if (!channelId) return;
-  
+
     sessionStorage.setItem("channelID", channelId);
-    navigate("/channels");
+    navigate(`/channels/${channelId}`);
   }
   return (
     <aside className="sidebar">
       <button
         type="button"
         className="sidebar__home"
-        onClick={() => navigate("/")}
+        onClick={() => {
+          sessionStorage.removeItem("channelID");
+          navigate("/");
+        }}
       >
         ⌂
       </button>
@@ -40,6 +43,13 @@ export default function Sidebar() {
           onClick={() => navigate("/channels")}
         >
           Channels
+        </button>
+        <button
+          type="button"
+          className="sidebar__channels-button sidebar__channels-button--create"
+          onClick={() => navigate("/channels/create")}
+        >
+          Create Channel
         </button>
 
         {loading ? (

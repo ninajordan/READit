@@ -1,146 +1,66 @@
-import { Link } from "react-router-dom";
-import { useHomepageChannels } from "../features/channels/useChannels.js";
-import "./HomePage.css";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar.jsx";
+import Footer from "../components/Footer.jsx";
+import ProfileCard from "../components/ProfileCard.jsx";
+import { useChannels } from "../features/channels/useChannels.js";
+import "./ChannelPage.css";
 
-const FALLBACK_HERO =
-  "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80";
-
-  export default function ChannelsPage() {
-  const { channels, loading, error } = useHomepageChannels();
-
-  const featuredChannel = channels?.[0] || null;
-  const spotlightChannels = channels?.slice(1, 5) || [];
+export default function ChannelPage() {
+  const navigate = useNavigate();
+  const { channels, loading, error } = useChannels();
 
   return (
-    <main className="homepage">
-      <section className="homepage__hero-shell">
-        <div className="homepage__browser-bar">
-          <div className="homepage__dots">
-            <span />
-            <span />
-            <span />
-          </div>
-          <div className="homepage__url">readit.com</div>
-        </div>
+    <div className="channel-page">
+      <div className="channel-page__content">
+        <Sidebar />
+        <main className="channel-page__main">
+          <ProfileCard />
+          <section className="channel-page__header">
+            <h1 className="channel-page__title">Channels</h1>
+            <p className="channel-page__subtitle">Choose a space and jump in.</p>
+          </section>
 
-        <section
-          className="homepage__hero"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.2)), url(${
-              featuredChannel?.heroImage || FALLBACK_HERO
-            })`,
-          }}
-        >
-          <div className="homepage__hero-overlay">
-            <p className="homepage__eyebrow">Anonymous. Expressive. Alive.</p>
-            <h1 className="homepage__title">READit</h1>
-            <p className="homepage__subtitle">
-              Jump into channels for hot takes, soft confessions, campus chaos,
-              art dumps, memes, and the occasional deeply unhinged midnight insight.
-            </p>
+          {loading ? (
+            <p className="channel-page__status">Loading channels...</p>
+          ) : null}
+          {error ? (
+            <p className="channel-page__status channel-page__status--error">{error}</p>
+          ) : null}
 
-            <div className="homepage__hero-actions">
-              <Link to="/channels" className="homepage__button homepage__button--primary">
-                Browse Channels
-              </Link>
-              {featuredChannel && (
-                <Link
-                  to={`/channels/${featuredChannel._id || featuredChannel.id}`}
-                  className="homepage__button homepage__button--secondary"
-                >
-                  Enter Featured Channel
-                </Link>
-              )}
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section className="homepage__content">
-        <div className="homepage__intro-card">
-          <div>
-            <p className="homepage__section-label">Featured right now</p>
-            <h2 className="homepage__section-title">Start where the conversation is hottest</h2>
-          </div>
-          <p className="homepage__section-copy">
-            Pick a channel, lurk dramatically, or post something that changes the emotional weather.
-          </p>
-        </div>
-
-        {loading && <p className="homepage__status">Loading homepage channels...</p>}
-        {error && !loading && <p className="homepage__status homepage__status--error">{error}</p>}
-
-        {!loading && !error && featuredChannel && (
-          <section className="homepage__featured-grid">
-            <article className="homepage__featured-card homepage__featured-card--main">
-              <div className="homepage__featured-card-content">
-                <p className="homepage__featured-tag">
-                  #{featuredChannel.channelCategory || "Featured"}
-                </p>
-                <h3 className="homepage__featured-title">
-                  #{featuredChannel.channelName}
-                </h3>
-                <p className="homepage__featured-description">
-                  {featuredChannel.description ||
-                    "A dynamic channel for conversation, reactions, sharp observations, and whatever else people need to say out loud."}
-                </p>
-                <Link
-                  to={`/channels/${featuredChannel._id || featuredChannel.id}`}
-                  className="homepage__featured-link"
-                >
-                  Open Channel
-                </Link>
-              </div>
-            </article>
-
-            <div className="homepage__spotlight-list">
-              {spotlightChannels.map((channel) => (
+          {!loading && !error ? (
+            <section className="channel-page__grid">
+              {channels.map((channel) => (
                 <article
-                  key={channel._id || channel.id}
-                  className="homepage__spotlight-card"
+                  key={channel.channelID}
+                  className="channel-page__card"
+                  onClick={() => navigate(`/channels/${channel.channelID}`)}
                 >
-                  <div>
-                    <p className="homepage__spotlight-category">
-                      {channel.channelCategory || "Channel"}
-                    </p>
-                    <h4 className="homepage__spotlight-title">
-                      #{channel.channelName}
-                    </h4>
-                    <p className="homepage__spotlight-description">
-                      {channel.description ||
-                        "Drop in for conversation, reactions, anonymous posts, and the strange little ecosystem of a shared channel."}
-                    </p>
-                  </div>
-
-                  <Link
-                    to={`/channels/${channel._id || channel.id}`}
-                    className="homepage__spotlight-link"
+                  <div
+                    className="channel-page__banner"
+                    style={{
+                      backgroundImage: channel.bannerImage
+                        ? `url(${channel.bannerImage})`
+                        : "linear-gradient(135deg, #101214 0%, #3b1d2c 50%, #8b3a2b 100%)",
+                    }}
                   >
-                    View
-                  </Link>
+                    {!channel.bannerImage ? (
+                      <span className="channel-page__banner-fallback">
+                        {channel.channelName?.[0]?.toUpperCase() || "R"}
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="channel-page__tag">{channel.channelCategory || "Channel"}</p>
+                  <h3 className="channel-page__name">#{channel.channelName}</h3>
+                  <p className="channel-page__description">
+                    {channel.channelDescription || "Anonymous conversations live here."}
+                  </p>
                 </article>
               ))}
-            </div>
-          </section>
-        )}
-
-        <section className="homepage__quick-links">
-          <Link to="/channels" className="homepage__quick-link homepage__quick-link--channels">
-            <span className="homepage__quick-icon">▦</span>
-            <span>Explore All Channels</span>
-          </Link>
-
-          <button type="button" className="homepage__quick-link homepage__quick-link--create">
-            <span className="homepage__quick-icon">＋</span>
-            <span>Create a Post</span>
-          </button>
-
-          <button type="button" className="homepage__quick-link homepage__quick-link--profile">
-            <span className="homepage__quick-icon">👤</span>
-            <span>Profile</span>
-          </button>
-        </section>
-      </section>
-    </main>
+            </section>
+          ) : null}
+        </main>
+      </div>
+      <Footer />
+    </div>
   );
 }

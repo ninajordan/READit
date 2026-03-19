@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import CreatePage from "./pages/CreatePage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import ChannelBrowser from "./features/channels/ChannelBrowser.jsx";
+import ChannelPage from "./pages/ChannelPage.jsx";
 import CreateChannelPage from "./pages/CreateChannelPage.jsx";
 import EditChannelPage from "./pages/EditChannelPage.jsx";
 import ChannelDetailPage from "./pages/ChannelDetailPage.jsx";
@@ -71,7 +71,7 @@ function App() {
           path="/channels"
           element={
             <RequireAuth>
-              <ChannelBrowser />
+              <ChannelPage />
             </RequireAuth>
           }
         />
