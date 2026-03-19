@@ -2,6 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import CreatePage from "./pages/CreatePage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import ChannelBrowser from "./features/channels/ChannelBrowser.jsx";
 
 function RequireAuth({ children }) {
   const userID = sessionStorage.getItem("userID");
@@ -32,10 +36,42 @@ function App() {
           }
         />
         <Route
+          path="/register"
+          element={
+            <RedirectIfLoggedIn>
+              <RegisterPage />
+            </RedirectIfLoggedIn>
+          }
+        />
+        <Route
           path="/"
           element={
             <RequireAuth>
               <HomePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/create"
+          element={
+            <RequireAuth>
+              <CreatePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/channels"
+          element={
+            <RequireAuth>
+              <ChannelBrowser />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth>
+              <ProfilePage />
             </RequireAuth>
           }
         />
