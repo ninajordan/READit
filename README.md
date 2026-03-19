@@ -53,9 +53,11 @@ Architecture:
 ![register](images/register.png)
 
 The first page you will see is the login or register page, if it is your first time please register with name, username and password. Then on returning visits you can remember your username and password to login.
+
 ![Anon](images/anon.png)
 
 Then you will be on our annonomyus posts page you can start swiping or go to channels button located underneath READIT on the black side bar to view all channels. Select/click the channel that most intreests you. once on this channel posts will appear you can read choose to like, dislike or comment. Like by pressing orange like button this will save this post to your profile.
+
 ![Channel](images/channel.png)
 
 ### Comments
@@ -63,13 +65,18 @@ Then you will be on our annonomyus posts page you can start swiping or go to cha
 ![Comment Before](images/comment_before.png)
 ![Comment After](images/comment_after.png)
 ![Liked Posts](images/liked_posts.png)
+
+
 Comment on a post by clicking the comment button write your comment and click "post". now your comment appears under posts, you can also view your profile under liked posts and find your comment there.
 
 ### Create posts/channels
 
 ![Posts](images/posts.png)
+
 You can create your own posts by first selecting channel, clicking the footer button create, it make a form where you can add a title and body of your posts
+
 ![New Channel](images/new_channel.png)
+
 You can also create new channels using the blackside bar button "create channel"
 
 So please create channels, posts and comments the READit community is ready to hear your thoughts and opintions
@@ -130,9 +137,11 @@ AI tools were used for the following purposes: ChatGPT
 
 - Debugging frontend–backend integration issues (API routes, environment variables).
 
-AI tools were used for the following purposes/prompts: Claude
-Only used for the Wireframe generation
+AI tools were used for the following purposes/prompts: 
+- Claude
+- Only used for the Wireframe generation
 
+### Prompts
 I want you to create images for a website I am planning to design. It is an anonymous social media platform.
 
 To start with the homepage:
@@ -146,14 +155,14 @@ The second row is posts row. Each post appears as a card and cards are presented
 Third row is buttons row. There are three buttons a big red circular cross button that dislikes the current post, a big blue circular comments button that opens the post and its comments and finally a big green tick mark button that likes the post
 
 The final row is footer. The footer has three buttons each designed using a logo/fa-icon. The first one is Channels,
-------
+
 Lets create the pop-out Post view.
 
 The background remains as the home page, but the post opens up as modal. The post title and content become completely visible in the first square box. The name of poster (bold) and timestamp (smaller font, lighter) appear in the bottom right corner of the post.
 
 The second square box is disconnected from first one and has comments. Each comment is separated by a horizontal line <hr>(?). Each comment in itself is divided into two rows.
 First row is name of the commenter (bold) and the timestamp of comment (smaller font, lighter) . The second row is the comment itself.
-------
+
 Now lets create the Channels page.
 
 The Channels page has same side panel as the Homepage
