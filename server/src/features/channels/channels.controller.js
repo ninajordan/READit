@@ -107,14 +107,16 @@ export async function createChannel(req, res) {
             channelName,
             channelDescription,
             channelCategory,
-            Homepage
+            bannerImage,
+            Homepage,
         } = req.body;
 
         const channelCreated = await channelsService.createChannelObject(
             channelName,
             channelDescription,
             channelCategory,
-            Homepage
+            bannerImage,
+            Homepage,
         );
 
         if (channelCreated.error === true) {

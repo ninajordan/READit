@@ -1,4 +1,4 @@
-.login-panel {
+.register-panel {
   background: #f8f2e9;
   border-radius: 20px;
   box-shadow: 0 25px 45px rgba(12, 16, 26, 0.08);
@@ -9,14 +9,14 @@
   width: min(440px, 100%);
 }
 
-.login-panel__label {
+.register-panel__label {
   color: var(--text-muted-dark);
   font-size: 0.85rem;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
 }
 
-.login-panel__input {
+.register-panel__input {
   border: none;
   border-bottom: 2px solid rgba(18, 18, 18, 0.25);
   background: transparent;
@@ -26,19 +26,19 @@
   padding: 0.4rem 0.2rem;
 }
 
-.login-panel__input:focus {
+.register-panel__input:focus {
   outline: none;
   border-bottom-color: var(--accent);
 }
 
-.login-panel__actions {
+.register-panel__actions {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
   margin-top: 0.5rem;
 }
 
-.login-panel__button {
+.register-panel__button {
   align-items: center;
   background: var(--accent);
   border: none;
@@ -51,7 +51,7 @@
   padding: 0.6rem 1.4rem;
 }
 
-.login-panel__link {
+.register-panel__link {
   background: none;
   border: none;
   color: var(--accent-deep);
@@ -60,7 +60,7 @@
   text-decoration: underline;
 }
 
-.login-panel__error {
+.register-panel__error {
   color: #b3413a;
   font-size: 0.9rem;
 }

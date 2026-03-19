@@ -1,0 +1,15 @@
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.post-grid__item {
+  width: 100%;
+}
+
+.post-grid__empty {
+  color: var(--text-muted-dark);
+  margin: 0;
+}

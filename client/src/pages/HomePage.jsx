@@ -36,15 +36,21 @@ export default function HomePage() {
 
   async function handleLikePost(post) {
     if (!post) return;
+
     try {
       const userID = sessionStorage.getItem("userID");
-      await registerLike({
+      const result = await registerLike({
         parentID: post.postID,
         userID,
         likeNotation: 1,
         likeType: "post",
       });
-      setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+
+      if (result?.message !== "Like removed") {
+        setDisplayPosts((prev) =>
+          prev.filter((item) => item.postID !== post.postID)
+        );
+      }
     } catch (err) {
       console.error(err);
     }
@@ -52,15 +58,21 @@ export default function HomePage() {
 
   async function handleDislikePost(post) {
     if (!post) return;
+
     try {
       const userID = sessionStorage.getItem("userID");
-      await registerLike({
+      const result = await registerLike({
         parentID: post.postID,
         userID,
         likeNotation: -1,
         likeType: "post",
       });
-      setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+
+      if (result?.message !== "Like removed") {
+        setDisplayPosts((prev) =>
+          prev.filter((item) => item.postID !== post.postID)
+        );
+      }
     } catch (err) {
       console.error(err);
     }
@@ -69,6 +81,7 @@ export default function HomePage() {
   useEffect(() => {
     if (displayPosts.length !== 0) return;
     if (status !== "success") return;
+
     if (metadata.end < metadata.total) {
       setStart(metadata.end);
     } else if (metadata.total > 0) {
@@ -88,13 +101,14 @@ export default function HomePage() {
               <p className="home-page__subtitle">Swipe left or right to explore.</p>
             </div>
             <p className="home-page__meta">
-              Showing {metadata.start}...{metadata.end} of {metadata.total} posts
+              Showing {metadata.start} to {metadata.end} of {metadata.total} posts
             </p>
           </section>
 
           {status === "loading" ? (
             <p className="home-page__status">Loading posts...</p>
           ) : null}
+
           {status === "error" ? (
             <p className="home-page__status home-page__status--error">{error}</p>
           ) : null}

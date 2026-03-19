@@ -97,13 +97,16 @@ export async function userLikedPosts(req, res) {
 
 export async function createPost(req, res) {
     try {
-        const {title, body, poster_id, channelID} = req.body;
+        const {postTitle, postBody, posterID, channelID} = req.body;
 
+        let channel_id = null
         if (channelID === "-1") {
-            channelID = null
+            channel_id = null;
+        } else {
+            channel_id = channelID;
         }
 
-        const postCreated = await postsService.createPostObject(title, body, poster_id, channelID);
+        const postCreated = await postsService.createPostObject(postTitle, postBody, posterID, channel_id);
         if (postCreated.error === true) {
             res.status(postCreated.status).json({"error":true, "message":postCreated.message});
         }

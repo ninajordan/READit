@@ -113,7 +113,7 @@ export async function getChannelWithPosts(id) {
     }
 }
 
-export async function createChannelObject(channelName, channelDescription, channelCategory, showOnHomepage = false) {
+export async function createChannelObject(channelName, channelDescription, channelCategory, bannerImage, showOnHomepage = false) {
     try {
         const db = getDatabase();
         const channelID = await getNextChannelID();
@@ -140,6 +140,7 @@ export async function createChannelObject(channelName, channelDescription, chann
             channelName: channelName,
             channelDescription: channelDescription ?? "",
             channelCategory: channelCategory ?? "",
+            bannerImage: bannerImage,
             showOnHomepage: showOnHomepage
         };
 
