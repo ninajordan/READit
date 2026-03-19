@@ -40,6 +40,7 @@ export default function HomePage() {
     try {
       const userID = sessionStorage.getItem("userID");
       const result = await registerLike({
+      const result = await registerLike({
         parentID: post.postID,
         userID,
         likeNotation: 1,
@@ -101,7 +102,7 @@ export default function HomePage() {
               <p className="home-page__subtitle">Swipe left or right to explore.</p>
             </div>
             <p className="home-page__meta">
-              Showing {metadata.start}...{metadata.end} of {metadata.total} posts
+              Showing {metadata.start} to {metadata.end} of {metadata.total} posts
             </p>
           </section>
 

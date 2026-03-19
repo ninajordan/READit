@@ -1,55 +1,95 @@
 import { getDatabase } from "../../config/db.js";
 
-function selectRandomWord() {
-    const word_list = ["Dog", "Ant", "Bear", "Cat", "Elephant", "Fish", "Girraffe", "Horse", "Iguana", "Jackal", "Kite", "Lion", "Monkey", "Newt", "Orangutan", "Parrot",
-        "Queen", "Rat", "Siphon", "Tiger", "Umbrella", "Violin", "Watermelon", "X-Ray", "Yacht", "Zebra", "Apple", "Bog", "Crumb", "Dalton", "Enigma", "Frost", "Grey", "Hunk",
-        "Icecream", "Joker", "Lamp", "Muzzle", "Null", "Opera", "Parakeet", "Quill", "Rabbit", "Style", "Toad", "Umber", "Venus", "Wolf", "Xylem", "Yellow", "Zero"
-    ];
+const WORD_LIST = [
+  "Dog",
+  "Ant",
+  "Bear",
+  "Cat",
+  "Elephant",
+  "Fish",
+  "Girraffe",
+  "Horse",
+  "Iguana",
+  "Jackal",
+  "Kite",
+  "Lion",
+  "Monkey",
+  "Newt",
+  "Orangutan",
+  "Parrot",
+  "Queen",
+  "Rat",
+  "Siphon",
+  "Tiger",
+  "Umbrella",
+  "Violin",
+  "Watermelon",
+  "X-Ray",
+  "Yacht",
+  "Zebra",
+  "Apple",
+  "Bog",
+  "Crumb",
+  "Dalton",
+  "Enigma",
+  "Frost",
+  "Grey",
+  "Hunk",
+  "Icecream",
+  "Joker",
+  "Lamp",
+  "Muzzle",
+  "Null",
+  "Opera",
+  "Parakeet",
+  "Quill",
+  "Rabbit",
+  "Style",
+  "Toad",
+  "Umber",
+  "Venus",
+  "Wolf",
+  "Xylem",
+  "Yellow",
+  "Zero",
+];
 
-    const random_word = word_list[Math.floor(Math.random() * word_list.length)];
-    return random_word;
+export function generateAnonymousTag() {
+  const randomWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+  return `Anonymous ${randomWord}`;
 }
 
-async function getNextUserID() {
-    const db = getDatabase();
-    const lastUser = await db
-    .collection("users")
-    .find({})
-    .sort({ userID: -1 })
-    .limit(1)
-    .toArray();
+export async function getNextUserID() {
+  const db = getDatabase();
+  const lastUser = await db.collection("users").find({}).sort({ userID: -1 }).limit(1).toArray();
 
-    if (lastUser.length === 0) {
-        return "001";
-    }
+  if (lastUser.length === 0) {
+    return "001";
+  }
 
-    const lastIdNumber = parseInt(lastUser[0].userID, 10);
-    const incrementedId = lastIdNumber + 1;
+  const lastIdNumber = parseInt(lastUser[0].userID, 10);
+  const incrementedId = lastIdNumber + 1;
 
-    return incrementedId.toString().padStart(3, "0");
+  return incrementedId.toString().padStart(3, "0");
 }
 
-export async function newUser(name) {
-    try {
-        const db = getDatabase();
-        const nextId = await getNextUserID();
+export async function findUserByUsername(username) {
+  const db = getDatabase();
+  return db.collection("users").findOne({ username });
+}
 
-        const randomness = selectRandomWord();
-        const user_anonymity = `Anonymous ${randomness}`;
+export async function createUser({ username, passwordHash, name, user_anonymity }) {
+  const db = getDatabase();
+  const userID = await getNextUserID();
 
-        const newUserObject = {
-            userID: nextId,
-            name: name,
-            user_anonymity: user_anonymity,
-        };
+  const newUserObject = {
+    userID,
+    username,
+    passwordHash,
+    name,
+    user_anonymity,
+  };
 
-        await db.collection("users").insertOne(newUserObject);
-        return newUserObject;
-    } catch (error) {
-        console.log("[USER SERVICE ERROR] Failed to create User");
-        return {
-            "error": error,
-            "status":500,
-        }
-    }
+  await db.collection("users").insertOne(newUserObject);
+  return newUserObject;
 }

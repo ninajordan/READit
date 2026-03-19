@@ -4,7 +4,8 @@ import { loginUser } from "../features/users/loginUser.js";
 import "./LoginPanel.css";
 
 export default function LoginPanel() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -12,9 +13,9 @@ export default function LoginPanel() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const trimmed = name.trim();
-    if (!trimmed) {
-      setError("Please enter your name.");
+    const trimmedUsername = username.trim();
+    if (!trimmedUsername || !password) {
+      setError("Please enter username and password.");
       return;
     }
 
@@ -22,7 +23,7 @@ export default function LoginPanel() {
       setStatus("loading");
       setError("");
 
-      const response = await loginUser(trimmed);
+      const response = await loginUser({ username: trimmedUsername, password });
       const user = response.user;
 
       sessionStorage.setItem("userID", user.userID);
@@ -38,22 +39,44 @@ export default function LoginPanel() {
 
   return (
     <form className="login-panel" onSubmit={handleSubmit}>
-      <label className="login-panel__label" htmlFor="login-name">
-        Enter your name
+      <label className="login-panel__label" htmlFor="login-username">
+        Username
       </label>
-      <div className="login-panel__input-row">
-        <input
-          id="login-name"
-          className="login-panel__input"
-          placeholder="Enter your name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          autoComplete="off"
-        />
+      <input
+        id="login-username"
+        className="login-panel__input"
+        placeholder="Enter your username"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+        autoComplete="username"
+      />
+
+      <label className="login-panel__label" htmlFor="login-password">
+        Password
+      </label>
+      <input
+        id="login-password"
+        className="login-panel__input"
+        placeholder="Enter your password"
+        type="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        autoComplete="current-password"
+      />
+
+      <div className="login-panel__actions">
         <button className="login-panel__button" type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "..." : "→"}
+          {status === "loading" ? "..." : "Login"}
+        </button>
+        <button
+          type="button"
+          className="login-panel__link"
+          onClick={() => navigate("/register")}
+        >
+          Register user
         </button>
       </div>
+
       {error ? <p className="login-panel__error">{error}</p> : null}
     </form>
   );

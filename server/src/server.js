@@ -3,7 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
+import session from "express-session";
+import passport from "passport";
 import { connectToDatabase } from "./config/db.js";
+import { configurePassport } from "./config/passport.js";
 import { configurePassport } from "./config/passport.js";
 
 import postRoutes from "./features/posts/posts.routes.js";
