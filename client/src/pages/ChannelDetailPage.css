@@ -1,5 +1,10 @@
 .channel-detail {
-  background: radial-gradient(circle at top, #fdf6ec 0%, #f3e6d2 55%, #e4d6c0 100%);
+  background: radial-gradient(
+    circle at top,
+    #fdf6ec 0%,
+    #f3e6d2 55%,
+    #e4d6c0 100%
+  );
   color: var(--text-dark);
   display: flex;
   flex-direction: column;
@@ -31,7 +36,11 @@
 }
 
 .channel-detail__overlay {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
   color: #fff;
   padding: 2rem;
   width: 100%;
@@ -40,7 +49,11 @@
 }
 
 .channel-detail__banner--fallback .channel-detail__overlay {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.45) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
 }
 
 .channel-detail__initials {

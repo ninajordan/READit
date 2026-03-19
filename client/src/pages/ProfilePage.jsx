@@ -20,7 +20,9 @@ export default function ProfilePage() {
           <ProfileCard />
           <section className="profile-page__header">
             <h1 className="profile-page__title">Liked posts</h1>
-            <p className="profile-page__subtitle">Everything you have liked so far.</p>
+            <p className="profile-page__subtitle">
+              Everything you have liked so far.
+            </p>
           </section>
 
           {status === "loading" ? (
@@ -30,7 +32,10 @@ export default function ProfilePage() {
             <p className="profile-page__note">{error}</p>
           ) : null}
           {status === "success" ? (
-            <PostGrid posts={posts} onOpenPost={(post) => setActivePostID(post.postID)} />
+            <PostGrid
+              posts={posts}
+              onOpenPost={(post) => setActivePostID(post.postID)}
+            />
           ) : null}
         </main>
       </div>

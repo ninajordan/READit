@@ -1,4 +1,10 @@
-export async function createPost({ postTitle, postBody, channelID, posterID, posterName }) {
+export async function createPost({
+  postTitle,
+  postBody,
+  channelID,
+  posterID,
+  posterName,
+}) {
   const baseUrl = import.meta.env.VITE_API_URL || "";
   const payload = {
     postTitle,

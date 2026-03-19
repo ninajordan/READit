@@ -27,7 +27,9 @@ export default function CreateChannelPage() {
           <ProfileCard />
           <section className="create-page__header">
             <h1 className="create-page__title">Create a new channel</h1>
-            <p className="create-page__subtitle">Start a new space for conversation.</p>
+            <p className="create-page__subtitle">
+              Start a new space for conversation.
+            </p>
           </section>
           <ChannelForm
             onSubmit={handleCreateChannel}

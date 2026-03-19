@@ -14,7 +14,12 @@ export default function ChannelDetailPage() {
   const { id } = useParams();
   const [channel, setChannel] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [metadata, setMetadata] = useState({ total: 0, start: 0, end: 0, limit: 20 });
+  const [metadata, setMetadata] = useState({
+    total: 0,
+    start: 0,
+    end: 0,
+    limit: 20,
+  });
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState("");
   const [activePostID, setActivePostID] = useState(null);
@@ -34,7 +39,12 @@ export default function ChannelDetailPage() {
         }
         const response = await fetchChannelById(id);
         if (!isActive) return;
-        setChannel(response?.channelData?.channel || response?.channel || response || null);
+        setChannel(
+          response?.channelData?.channel ||
+            response?.channel ||
+            response ||
+            null,
+        );
       } catch (err) {
         if (!isActive) return;
         setError(err.message || "Failed to load channel");
@@ -57,10 +67,16 @@ export default function ChannelDetailPage() {
       try {
         setStatus("loading");
         setError("");
-        const response = await fetchPostsInChannel({ channelID: id, start, limit });
+        const response = await fetchPostsInChannel({
+          channelID: id,
+          start,
+          limit,
+        });
         if (!isActive) return;
         setPosts(Array.isArray(response?.posts) ? response.posts : []);
-        setMetadata(response?.metadata || { total: 0, start, end: start, limit });
+        setMetadata(
+          response?.metadata || { total: 0, start, end: start, limit },
+        );
         setStatus("success");
       } catch (err) {
         if (!isActive) return;
@@ -104,7 +120,9 @@ export default function ChannelDetailPage() {
         likeType: "post",
       });
       if (result?.message !== "Like removed") {
-        setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+        setDisplayPosts((prev) =>
+          prev.filter((item) => item.postID !== post.postID),
+        );
       }
     } catch (err) {
       console.error(err);
@@ -122,7 +140,9 @@ export default function ChannelDetailPage() {
         likeType: "post",
       });
       if (result?.message !== "Like removed") {
-        setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+        setDisplayPosts((prev) =>
+          prev.filter((item) => item.postID !== post.postID),
+        );
       }
     } catch (err) {
       console.error(err);
@@ -133,7 +153,10 @@ export default function ChannelDetailPage() {
   const channelName = channel?.channelName || "Channel";
   const bannerStyle = bannerImage
     ? { backgroundImage: `url(${bannerImage})` }
-    : { backgroundImage: "linear-gradient(135deg, #101214 0%, #3b1d2c 50%, #8b3a2b 100%)" };
+    : {
+        backgroundImage:
+          "linear-gradient(135deg, #101214 0%, #3b1d2c 50%, #8b3a2b 100%)",
+      };
   const initials = channelName
     .split(" ")
     .filter(Boolean)
@@ -156,7 +179,8 @@ export default function ChannelDetailPage() {
               <p className="channel-detail__eyebrow">Channel</p>
               <h1 className="channel-detail__title">#{channelName}</h1>
               <p className="channel-detail__subtitle">
-                {channel?.channelDescription || "Anonymous stories and honest replies."}
+                {channel?.channelDescription ||
+                  "Anonymous stories and honest replies."}
               </p>
             </div>
             {!bannerImage ? (
@@ -174,7 +198,9 @@ export default function ChannelDetailPage() {
             <p className="channel-detail__status">Loading channel posts...</p>
           ) : null}
           {status === "error" ? (
-            <p className="channel-detail__status channel-detail__status--error">{error}</p>
+            <p className="channel-detail__status channel-detail__status--error">
+              {error}
+            </p>
           ) : null}
 
           {status === "success" ? (

@@ -22,7 +22,7 @@ export function configurePassport() {
       } catch (error) {
         return done(error);
       }
-    })
+    }),
   );
 
   passport.serializeUser((user, done) => {

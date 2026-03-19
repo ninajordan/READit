@@ -21,7 +21,10 @@ export default function EditChannelPage() {
     async function loadChannel() {
       try {
         const response = await fetchChannelById(id);
-        const foundChannel = response?.channelData?.channel || response?.channel || response?.channelData;
+        const foundChannel =
+          response?.channelData?.channel ||
+          response?.channel ||
+          response?.channelData;
         setChannel(foundChannel);
       } catch (err) {
         setError(err.message || "Failed to load channel");
@@ -53,7 +56,9 @@ export default function EditChannelPage() {
           <ProfileCard />
           <section className="create-page__header">
             <h1 className="create-page__title">Edit channel</h1>
-            <p className="create-page__subtitle">Update this channel’s details.</p>
+            <p className="create-page__subtitle">
+              Update this channel’s details.
+            </p>
           </section>
 
           {loading ? <p>Loading channel...</p> : null}

@@ -28,11 +28,17 @@ export default function ProfileCard({ name = "Guest", handle = "Anonymous" }) {
         <p className="profile-card__label">Profile</p>
         <p className="profile-card__name">{displayName}</p>
         <p className="profile-card__hint">
-          {storedUserId ? "Anonymous identity active." : "Sign in to reveal your anonymous handle."}
+          {storedUserId
+            ? "Anonymous identity active."
+            : "Sign in to reveal your anonymous handle."}
         </p>
       </div>
       {storedUserId ? (
-        <button type="button" className="profile-card__logout" onClick={handleLogout}>
+        <button
+          type="button"
+          className="profile-card__logout"
+          onClick={handleLogout}
+        >
           Logout
         </button>
       ) : null}

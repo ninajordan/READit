@@ -12,8 +12,12 @@ export default function RegisterPage() {
         <main className="register-page__main">
           <ProfileCard />
           <section className="register-page__welcome">
-            <h1 className="register-page__title">Create your READit identity</h1>
-            <p className="register-page__subtitle">Stay anonymous. Share honestly.</p>
+            <h1 className="register-page__title">
+              Create your READit identity
+            </h1>
+            <p className="register-page__subtitle">
+              Stay anonymous. Share honestly.
+            </p>
           </section>
           <RegisterPanel />
         </main>

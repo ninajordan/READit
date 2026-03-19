@@ -18,7 +18,8 @@ export default function CreatePage() {
       try {
         const response = await fetchChannelById(channelID);
         if (!isActive) return;
-        const channel = response?.channelData?.channel || response?.channel || response;
+        const channel =
+          response?.channelData?.channel || response?.channel || response;
         setChannelName(channel?.channelName || "");
       } catch {
         // ignore errors and keep default
@@ -40,7 +41,9 @@ export default function CreatePage() {
           <ProfileCard />
           <section className="create-page__header">
             <h1 className="create-page__title">Create a new post</h1>
-            <p className="create-page__subtitle">Share your story anonymously.</p>
+            <p className="create-page__subtitle">
+              Share your story anonymously.
+            </p>
           </section>
           {channelName ? (
             <p className="create-page__note">Adding post to #{channelName}</p>

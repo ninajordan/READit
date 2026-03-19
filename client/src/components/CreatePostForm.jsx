@@ -74,7 +74,11 @@ export default function CreatePostForm() {
         onChange={(event) => setBody(event.target.value)}
       />
 
-      <button className="create-post__button" type="submit" disabled={status === "loading"}>
+      <button
+        className="create-post__button"
+        type="submit"
+        disabled={status === "loading"}
+      >
         {status === "loading" ? "Posting..." : "Submit"}
       </button>
       {error ? <p className="create-post__error">{error}</p> : null}

@@ -1,6 +1,8 @@
 export async function fetchLikedPosts(userID) {
   const baseUrl = import.meta.env.VITE_API_URL || "";
-  const response = await fetch(`${baseUrl}/api/posts/get-liked-posts/${userID}`);
+  const response = await fetch(
+    `${baseUrl}/api/posts/get-liked-posts/${userID}`,
+  );
 
   if (!response.ok) {
     const errorText = await response.text();

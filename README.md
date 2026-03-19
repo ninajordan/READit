@@ -1,97 +1,171 @@
-# Project :READit: swipe left swipe right
+# Project :READit: ANON discussion platform
 
 ## Author
+
 Kunj Joshi & Nina Jordan
 
 ## Class
-CS 5600 – Web Design  - Northeastern University
+
+CS 5600 – Web Design - Northeastern University
 https://johnguerra.co/classes/webDevelopment_online_spring_2026/
+
 ---
 
 ## Project Objective
 
-Our goal for this project was to design and implement READit, a full-stack web application that enables users to explore, create, and engage with anonymous, community-driven content through channel-based discussions. inaide this platform users stay engaged by swiping on posts. Left for pass/skip. Right for engage: from there you can view, comment and Discus tiopucs inside a dynamic, social interface. The application was developed with a React-based front end using modern hooks and component architecture, alongside a scalable Node.js and Express backend with MongoDB for data management.
-
+READit is a full-stack web application designed to allow anonymous, community discussion through channel grouped or random content. The platform enables users to discover, post, and contribute to conversations in an intuitive and immersive way.
+Users browse posts by choosing dislike or like. Any user can contribute to posts through commenting sharing their options and saving the post to their profile to revisit
+The application is built with a React front end hooks and component-based architecture, paired with a scalable Node.js and Express backend. MongoDB Atlas .
 
 ## Features
 
-- Browse and explore channels by topic, search queries or from the homepage
+Channel-Based Content Discovery:
 
-- Swipe-based interaction system (left to dismiss, right to engage) for intuitive content discovery
+- With in channels grouped by topic , Create and browses posts to explore content.
+- Navigate between homepage, profile page were your likes are visable and content channels
 
-- With in channels grouped by topic, Create and browses posts to explore content
+User interaction:
 
-- Comment on posts to participate in ongoing discussions
+- Hit "dislike" button to skip a post
+- Hit "like" to save a post to your profile for later viewing
+- Comment on posts to participate in ongoing discussions, click on post to view yours and other comments
+- create a post under a certian channel topic
 
--  post's cards have interactive UI and real-time feedback
+Architecture:
 
-
--
-- RESTful backend built with Node.js and Express following controller, route, and model patterns
-
-- Data persistence using MongoDB Atlas for scalable storage
-
+- Modal-based post viewing and commenting
+- Immediate UI feedback for actions like likes and interactions
+- React using hooks (useState, useEffect, custom hooks)
+- RESTful API built with Node.js and Express
+- controller, route, and service
+- MongoDB Atlas for data
+- collections for users, posts, channels, comments, and likes
 - API-driven communication between front end and backend using asynchronous requests
 
+---
+
+## Instructions to use and enjoy READit as a user and screenshots
+
+### Register & login
+
+![register](images/register.png)
+
+The first page you will see is the login or register page, if it is your first time please register with name, username and password. Then on returning visits you can remember your username and password to login.
+
+![Anon](images/anon.png)
+
+Then you will be on our annonomyus posts page you can start swiping or go to channels button located underneath READIT on the black side bar to view all channels. Select/click the channel that most intreests you. once on this channel posts will appear you can read choose to like, dislike or comment. Like by pressing orange like button this will save this post to your profile.
+
+![Channel](images/channel.png)
+
+### Comments
+
+![Comment Before](images/comment_before.png)
+![Comment After](images/comment_after.png)
+![Liked Posts](images/liked_posts.png)
+
+
+Comment on a post by clicking the comment button write your comment and click "post". now your comment appears under posts, you can also view your profile under liked posts and find your comment there.
+
+### Create posts/channels
+
+![Posts](images/posts.png)
+
+You can create your own posts by first selecting channel, clicking the footer button create, it make a form where you can add a title and body of your posts
+
+![New Channel](images/new_channel.png)
+
+You can also create new channels using the blackside bar button "create channel"
+
+So please create channels, posts and comments the READit community is ready to hear your thoughts and opintions
 
 ---
-## Screenshots
 
-### Location Selected
-![Location Clicked](images/location_clicked.png)
-Here From our home page there are multiple rows of catergories with clickable locations. Once clicked - this image displays a location large and in the center of the screen offering clear viewing of location details
+## Instructions to Build and Run ReadIT Locally
+1. Clone the github repository
+   git clone https://www.github.com/ninajordan/READit
+   cd READit
 
-### Filter System
-![Filter](images/filter.png)
-Users can use the Search bar to search by catergory or name and the filter drop down to adjust for user rating of that location, or time it takes to complete. 
-### Itinerary View
-![Itinerary](images/itinerary.png)
-This is our Itinerary main page, were users select locations and add them to their itinerary using a drag and drop and prefilled time slots for easy use.
-
-## Instructions to use and enjoy Boston-Xplorers as a user
-
-The first page you will see is the Homepage, here our locations are displayed by default by catergory name in row format. You can scroll up and down the page viewing locations arraged by catergory. Each catergory Row has a next and prev button inorder to view all locations in that catergory. The search bar allows for users to search for specific locations by name/catergory. It is a live search so options pop up and disapear as users type. The filter toggle has a drop down were you can select a catergorey and filter it by time it takes to complete or user star ratings 0-5, in accending or desending order. Users can use the Add location button on the blue left side bar to add spots around boston they enjoyed that are missing form the app. They can use the prefilled itineraries located on the blueside bar to use others itineraries and save themselves time on researching boston inorder to experince it for themselves. users can use the go to itineray button on the blueside bar to switch to the itinerary main page. From here users have a view of their callender in hour slots and can use the locations on the left hand side and drag and drop location into their itinerary. Itinerarys can be saved and deleted as the user goes.
-___
-## Instructions to Build and Run Boston-Xplorers Locally
-
-1. Install project dependencies
+2. Start the NodeJS Backend Server:
+   cd server
    npm install
-
-2. Start the development server
+   cp .env.example .env
+   Enter Database Credentials
    npm run dev
 
-3. Open the application in your browser
-   http://localhost:3000
+3. Start the ReactJS Server:
+   cd client
+   cp .env.example .env
+   npm install
+   npm run dev
 
 
+Visit http://localhost:5173 on your browser
 
 ---
+
 ## Design Document
 
 The full design document (project description, user personas, user stories, and mockups) is available from:
 
 📄 [View Design Document (PDF)](docs/design-document.md)
 
-
 ---
-## Licence 
+
+## Licence
 
 This project is licensed under the MIT License.
 
 See LICENSE file for details.
+
 ## Use of Generative AI Tools
 
 This project makes limited and transparent use of generative AI tools to support development and content creation as required by rubric for AI page.
 
 ### Tools Used
+
 - **Model:** Claude (Sonnet 4.6)
+- **Access Method:** Web interface
+- **Model:** ChatGPT (OpenAi)
 - **Access Method:** Web interface
 
 ### How AI Was Used
-AI tools were used for the following purposes:
 
+AI tools were used for the following purposes: ChatGPT
 
+- Debugging frontend–backend integration issues (API routes, environment variables).
+
+AI tools were used for the following purposes/prompts: 
+- Claude
+- Only used for the Wireframe generation
+
+### Prompts
+I want you to create images for a website I am planning to design. It is an anonymous social media platform.
+
+To start with the homepage:
+
+Divide the homepage into 2 columns. First column is a Hamburger icon that pops open a side panel. The sidepanel consists of Channels and lists down each of the Channels. Each channel is clickable. The right column is a wider column and divided into 4 rows.
+
+First row is text row which reads: READit in first line and Browse. Post. Comment. Anonymously on the second line.
+
+The second row is posts row. Each post appears as a card and cards are presented as a stack. Each card can be swiped left or right meaning dislike or like respectively. Each card contains a preview text. Each card is clickable as well.
+
+Third row is buttons row. There are three buttons a big red circular cross button that dislikes the current post, a big blue circular comments button that opens the post and its comments and finally a big green tick mark button that likes the post
+
+The final row is footer. The footer has three buttons each designed using a logo/fa-icon. The first one is Channels,
+
+Lets create the pop-out Post view.
+
+The background remains as the home page, but the post opens up as modal. The post title and content become completely visible in the first square box. The name of poster (bold) and timestamp (smaller font, lighter) appear in the bottom right corner of the post.
+
+The second square box is disconnected from first one and has comments. Each comment is separated by a horizontal line. Each comment in itself is divided into two rows.
+First row is name of the commenter (bold) and the timestamp of comment (smaller font, lighter) . The second row is the comment itself.
+
+Now lets create the Channels page.
+
+The Channels page has same side panel as the Homepage
+But the right column contains Channels. Each of the channels are shown as cards in Nx2 layout grid where each row contains 2 channel cards.
+
+The channel card itself is divided into 4 rows. The first row contains the channel banner image. The second row contains Channel name which is presented with a # such
 
 All generated content was reviewed, edited, and integrated manually.
-
-### Prompts used

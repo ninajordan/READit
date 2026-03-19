@@ -17,14 +17,18 @@ export default function ChannelPage() {
           <ProfileCard />
           <section className="channel-page__header">
             <h1 className="channel-page__title">Channels</h1>
-            <p className="channel-page__subtitle">Choose a space and jump in.</p>
+            <p className="channel-page__subtitle">
+              Choose a space and jump in.
+            </p>
           </section>
 
           {loading ? (
             <p className="channel-page__status">Loading channels...</p>
           ) : null}
           {error ? (
-            <p className="channel-page__status channel-page__status--error">{error}</p>
+            <p className="channel-page__status channel-page__status--error">
+              {error}
+            </p>
           ) : null}
 
           {!loading && !error ? (
@@ -49,10 +53,13 @@ export default function ChannelPage() {
                       </span>
                     ) : null}
                   </div>
-                  <p className="channel-page__tag">{channel.channelCategory || "Channel"}</p>
+                  <p className="channel-page__tag">
+                    {channel.channelCategory || "Channel"}
+                  </p>
                   <h3 className="channel-page__name">#{channel.channelName}</h3>
                   <p className="channel-page__description">
-                    {channel.channelDescription || "Anonymous conversations live here."}
+                    {channel.channelDescription ||
+                      "Anonymous conversations live here."}
                   </p>
                 </article>
               ))}

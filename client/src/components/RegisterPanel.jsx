@@ -83,7 +83,11 @@ export default function RegisterPanel() {
       />
 
       <div className="register-panel__actions">
-        <button className="register-panel__button" type="submit" disabled={status === "loading"}>
+        <button
+          className="register-panel__button"
+          type="submit"
+          disabled={status === "loading"}
+        >
           {status === "loading" ? "..." : "Register"}
         </button>
         <button

@@ -109,7 +109,9 @@ export default function PostModal({ postID, onClose }) {
           Close
         </button>
         {status === "loading" ? <p>Loading...</p> : null}
-        {status === "error" ? <p className="post-modal__error">{error}</p> : null}
+        {status === "error" ? (
+          <p className="post-modal__error">{error}</p>
+        ) : null}
         {status === "success" && post ? (
           <>
             <div className="post-modal__header">
@@ -117,16 +119,28 @@ export default function PostModal({ postID, onClose }) {
                 <p className="post-modal__poster">
                   {post.posterName || "Anonymous"}
                 </p>
-                <button type="button" className="post-modal__like" onClick={handleLikePost}>
+                <button
+                  type="button"
+                  className="post-modal__like"
+                  onClick={handleLikePost}
+                >
                   <span className="post-modal__heart">♥</span>
-                  <span className="post-modal__likes">{post.numLikes ?? 0}</span>
+                  <span className="post-modal__likes">
+                    {post.numLikes ?? 0}
+                  </span>
                 </button>
               </div>
               <h2 className="post-modal__title">{post.postTitle}</h2>
               <p className="post-modal__body">{post.postBody}</p>
             </div>
-            <CreateComment onSubmit={handleSubmitComment} isSubmitting={isSubmitting} />
-            <CommentList comments={comments} onLikeComment={handleLikeComment} />
+            <CreateComment
+              onSubmit={handleSubmitComment}
+              isSubmitting={isSubmitting}
+            />
+            <CommentList
+              comments={comments}
+              onLikeComment={handleLikeComment}
+            />
           </>
         ) : null}
       </div>

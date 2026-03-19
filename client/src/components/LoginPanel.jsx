@@ -65,7 +65,11 @@ export default function LoginPanel() {
       />
 
       <div className="login-panel__actions">
-        <button className="login-panel__button" type="submit" disabled={status === "loading"}>
+        <button
+          className="login-panel__button"
+          type="submit"
+          disabled={status === "loading"}
+        >
           {status === "loading" ? "..." : "Login"}
         </button>
         <button

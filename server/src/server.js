@@ -27,7 +27,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "readit-session",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 
 configurePassport();
