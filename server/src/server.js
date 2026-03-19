@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import session from "express-session";
+import passport from "passport";
 import { connectToDatabase } from "./config/db.js";
+import { configurePassport } from "./config/passport.js";
 
 import postRoutes from './features/posts/posts.routes.js';
 import userRoutes from './features/users/users.routes.js';
@@ -19,7 +22,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("client")); // Serve static files
 
-app.use("/api/user", userRoutes);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "readit-session",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+configurePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/channels", channelRoutes);

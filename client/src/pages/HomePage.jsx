@@ -38,13 +38,15 @@ export default function HomePage() {
     if (!post) return;
     try {
       const userID = sessionStorage.getItem("userID");
-      await registerLike({
+      const result = await registerLike({
         parentID: post.postID,
         userID,
         likeNotation: 1,
         likeType: "post",
       });
-      setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+      if (result?.message !== "Like removed") {
+        setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+      }
     } catch (err) {
       console.error(err);
     }
@@ -54,13 +56,15 @@ export default function HomePage() {
     if (!post) return;
     try {
       const userID = sessionStorage.getItem("userID");
-      await registerLike({
+      const result = await registerLike({
         parentID: post.postID,
         userID,
         likeNotation: -1,
         likeType: "post",
       });
-      setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+      if (result?.message !== "Like removed") {
+        setDisplayPosts((prev) => prev.filter((item) => item.postID !== post.postID));
+      }
     } catch (err) {
       console.error(err);
     }
@@ -88,7 +92,7 @@ export default function HomePage() {
               <p className="home-page__subtitle">Swipe left or right to explore.</p>
             </div>
             <p className="home-page__meta">
-              Showing {metadata.start}...{metadata.end} of {metadata.total} posts
+              Showing {metadata.start} to {metadata.end} of {metadata.total} posts
             </p>
           </section>
 

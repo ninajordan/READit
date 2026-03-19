@@ -44,7 +44,6 @@ export async function listAllPosts(limit = 20, start = 0) {
         const userIDs = postsToSend.map(p => p.posterID);
 
         const users = await db.collection("users").find({userID: {$in: userIDs}}).toArray();
-        console.log("[DEBUG] fetched users: ", users);
         const userMap = {}
         for (const user of users) {
             userMap[user.userID] = user.user_anonymity;
@@ -184,8 +183,9 @@ export async function likedPosts(userID) {
 
         const userLikes = await db
             .collection("likes")
-            .find({ userID: userID, likeNotation: 1 })
+            .find({ userID: userID, likeNotation: 1, likeType: "post" })
             .toArray();
+        
 
         if (userLikes.length === 0) {
             return { posts: [], error: false, status: 200 };
@@ -193,13 +193,26 @@ export async function likedPosts(userID) {
 
         const postIDs = new Set();
         for (const like of userLikes) {
-            postIDs.add(like.postID);
+            postIDs.add(like.parentID);
         }
+
 
         const userLikedPosts = await db
             .collection("posts")
             .find({ postID: { $in: [...postIDs] } })
             .toArray();
+        
+        const userIDs = userLikedPosts.map(p => p.posterID);
+
+        const users = await db.collection("users").find({userID: {$in: userIDs}}).toArray();
+        const userMap = {}
+        for (const user of users) {
+            userMap[user.userID] = user.user_anonymity;
+        }
+
+        for (let i = 0; i< userLikedPosts.length; i++) {
+            userLikedPosts[i]['posterName'] = userMap[userLikedPosts[i]['posterID']]
+        }
         return {
             posts: userLikedPosts, error: false, status: 200
         }

@@ -1,11 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import { useChannels } from "../hooks/useChannels.js";
 import "./Sidebar.css";
 
 export default function Sidebar({ onChannelSelect }) {
   const { channels, status, error } = useChannels();
+  const navigate = useNavigate();
+
+  function handleHomeClick() {
+    sessionStorage.removeItem("channelID");
+    navigate("/");
+  }
 
   return (
     <aside className="sidebar">
+      <button type="button" className="sidebar__home" onClick={handleHomeClick}>
+        ⌂
+      </button>
       <div className="sidebar__brand">READit</div>
       <div className="sidebar__section">
         <p className="sidebar__label">Channels</p>
