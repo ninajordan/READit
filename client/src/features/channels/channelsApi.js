@@ -1,4 +1,5 @@
-const CHANNELS_API_BASE = "/api/channels";
+const BASE_URL = import.meta.env.VITE_API_URL || "";
+const CHANNELS_API_BASE = `${BASE_URL}/api/channels`;
 
 async function handleResponse(response) {
   if (!response.ok) {
