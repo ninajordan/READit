@@ -160,7 +160,7 @@ Lets create the pop-out Post view.
 
 The background remains as the home page, but the post opens up as modal. The post title and content become completely visible in the first square box. The name of poster (bold) and timestamp (smaller font, lighter) appear in the bottom right corner of the post.
 
-The second square box is disconnected from first one and has comments. Each comment is separated by a horizontal line <hr>(?). Each comment in itself is divided into two rows.
+The second square box is disconnected from first one and has comments. Each comment is separated by a horizontal line. Each comment in itself is divided into two rows.
 First row is name of the commenter (bold) and the timestamp of comment (smaller font, lighter) . The second row is the comment itself.
 
 Now lets create the Channels page.
