@@ -22,7 +22,7 @@ Someone who likes discussing topics online and would like to post his opinions a
 **Name:** Kevin
 
 **Wants:**
-Wants to explore Boston but does not know what places to visit or what are the good spots. Always on lookout for better restaurants, museums, events and different things to do in Boston. Also very time-savvy and wants to plan things on basis of how much time each location takes.
+Someone who likes reading through other people's opinions and would like to validate people with matching thoughts or criticize wrongful or hateful opinions.
 
 ---
 

@@ -46,7 +46,7 @@ Architecture:
 
 ---
 
-## Instructions to use and enjoy Boston-Xplorers as a user and screenshots
+## Instructions to use and enjoy READit as a user and screenshots
 
 ### Register & login
 
@@ -76,30 +76,26 @@ So please create channels, posts and comments the READit community is ready to h
 
 ---
 
-## Instructions to Build and Run Boston-Xplorers Locally
+## Instructions to Build and Run ReadIT Locally
+1. Clone the github repository
+   git clone https://www.github.com/ninajordan/READit
+   cd READit
 
-1. Install project dependencies:
-   cd client
-   npm install
-   cd ../server
-   npm install
-
-2. Start the backend server:
+2. Start the NodeJS Backend Server:
    cd server
+   npm install
+   cp .env.example .env
+   Enter Database Credentials
    npm run dev
-   server runs on http://localhost:3000
 
-3. Start frontend Vite in a new terminal
+3. Start the ReactJS Server:
    cd client
+   cp .env.example .env
+   npm install
    npm run dev
-   Client runs on: http://localhost:5173
 
-4. Open the application in your browser
-   http://localhost:5173
 
-5. enviortment set up
-   VITE_API_URL=http://localhost:3000
-   .env file needs to be in client folder
+Visit http://localhost:5173 on your browser
 
 ---
 
@@ -136,7 +132,8 @@ AI tools were used for the following purposes: ChatGPT
 
 AI tools were used for the following purposes/prompts: Claude
 Only used for the Wireframe generation
-[12:55 PM]I want you to create images for a website I am planning to design. It is an anonymous social media platform.
+
+I want you to create images for a website I am planning to design. It is an anonymous social media platform.
 
 To start with the homepage:
 
@@ -148,17 +145,15 @@ The second row is posts row. Each post appears as a card and cards are presented
 
 Third row is buttons row. There are three buttons a big red circular cross button that dislikes the current post, a big blue circular comments button that opens the post and its comments and finally a big green tick mark button that likes the post
 
-## The final row is footer. The footer has three buttons each designed using a logo/fa-icon. The first one is Channels,
-
+The final row is footer. The footer has three buttons each designed using a logo/fa-icon. The first one is Channels,
+------
 Lets create the pop-out Post view.
 
 The background remains as the home page, but the post opens up as modal. The post title and content become completely visible in the first square box. The name of poster (bold) and timestamp (smaller font, lighter) appear in the bottom right corner of the post.
 
 The second square box is disconnected from first one and has comments. Each comment is separated by a horizontal line <hr>(?). Each comment in itself is divided into two rows.
 First row is name of the commenter (bold) and the timestamp of comment (smaller font, lighter) . The second row is the comment itself.
-
----
-
+------
 Now lets create the Channels page.
 
 The Channels page has same side panel as the Homepage
