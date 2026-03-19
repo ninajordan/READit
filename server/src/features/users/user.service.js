@@ -61,7 +61,12 @@ export function generateAnonymousTag() {
 
 export async function getNextUserID() {
   const db = getDatabase();
-  const lastUser = await db.collection("users").find({}).sort({ userID: -1 }).limit(1).toArray();
+  const lastUser = await db
+    .collection("users")
+    .find({})
+    .sort({ userID: -1 })
+    .limit(1)
+    .toArray();
 
   if (lastUser.length === 0) {
     return "001";
@@ -78,7 +83,12 @@ export async function findUserByUsername(username) {
   return db.collection("users").findOne({ username });
 }
 
-export async function createUser({ username, passwordHash, name, user_anonymity }) {
+export async function createUser({
+  username,
+  passwordHash,
+  name,
+  user_anonymity,
+}) {
   const db = getDatabase();
   const userID = await getNextUserID();
 

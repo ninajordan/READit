@@ -9,18 +9,26 @@ import {
 export function userLogin(req, res, next) {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
-      return res.status(500).json({ message: "Login failed", error: String(err) });
+      return res
+        .status(500)
+        .json({ message: "Login failed", error: String(err) });
     }
     if (!user) {
-      return res.status(401).json({ message: info?.message || "Invalid credentials" });
+      return res
+        .status(401)
+        .json({ message: info?.message || "Invalid credentials" });
     }
 
     req.logIn(user, (loginErr) => {
       if (loginErr) {
-        return res.status(500).json({ message: "Login failed", error: String(loginErr) });
+        return res
+          .status(500)
+          .json({ message: "Login failed", error: String(loginErr) });
       }
 
-      const { passwordHash, ...safeUser } = user;
+      const safeUser = { ...user };
+      delete safeUser.passwordHash;
+
       return res.status(200).json({
         message: "User Login Successful",
         userID: safeUser.userID,
@@ -35,7 +43,9 @@ export async function userRegister(req, res) {
     const { username, password, name } = req.body;
 
     if (!username || !password || !name) {
-      return res.status(400).json({ message: "username, password, and name are required" });
+      return res
+        .status(400)
+        .json({ message: "username, password, and name are required" });
     }
 
     const existing = await findUserByUsername(username);
@@ -53,7 +63,8 @@ export async function userRegister(req, res) {
       user_anonymity,
     });
 
-    const { passwordHash: _, ...safeUser } = newUser;
+    const safeUser = { ...newUser };
+    delete safeUser.passwordHash;
 
     return res.status(201).json({
       message: "User Registration Successful",
@@ -61,14 +72,18 @@ export async function userRegister(req, res) {
       user: safeUser,
     });
   } catch (error) {
-    return res.status(500).json({ message: "Error in User Register", error: String(error) });
+    return res
+      .status(500)
+      .json({ message: "Error in User Register", error: String(error) });
   }
 }
 
 export function userLogout(req, res) {
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({ message: "Logout failed", error: String(err) });
+      return res
+        .status(500)
+        .json({ message: "Logout failed", error: String(err) });
     }
     req.session.destroy(() => {
       return res.status(200).json({ message: "Logout successful" });

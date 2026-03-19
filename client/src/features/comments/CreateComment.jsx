@@ -21,7 +21,11 @@ export default function CreateComment({ onSubmit, isSubmitting = false }) {
         onChange={(event) => setValue(event.target.value)}
         disabled={isSubmitting}
       />
-      <button type="submit" className="create-comment__button" disabled={isSubmitting}>
+      <button
+        type="submit"
+        className="create-comment__button"
+        disabled={isSubmitting}
+      >
         {isSubmitting ? "Posting..." : "Post"}
       </button>
     </form>

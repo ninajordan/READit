@@ -6,7 +6,7 @@ import "./ChannelBrowser.css";
 const FALLBACK_HERO =
   "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1600&q=80";
 
-  const CHANNEL_VISUALS = {
+const CHANNEL_VISUALS = {
   General: {
     heroImage:
       "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80",
@@ -175,16 +175,16 @@ const FALLBACK_POSTS = {
 };
 
 export default function ChannelBrowser() {
-    const navigate = useNavigate();
-    const { channels: rawChannels, loading, error } = useChannels();
-    const channels = Array.isArray(rawChannels)
-      ? rawChannels
-      : Array.isArray(rawChannels?.channels)
-        ? rawChannels.channels
-        : [];
+  const navigate = useNavigate();
+  const { channels: rawChannels, loading, error } = useChannels();
+  const channels = Array.isArray(rawChannels)
+    ? rawChannels
+    : Array.isArray(rawChannels?.channels)
+      ? rawChannels.channels
+      : [];
   const [selectedChannelId, setSelectedChannelId] = useState(null);
   const [dismissedPostIds, setDismissedPostIds] = useState([]);
-  
+
   useEffect(() => {
     if (!channels.length) return;
     if (selectedChannelId) return;
@@ -208,10 +208,9 @@ export default function ChannelBrowser() {
   const channelVisual = CHANNEL_VISUALS[selectedChannelName] || {};
 
   const visiblePosts = useMemo(() => {
-    const rawPosts =
-      selectedChannel?.previewPosts?.length
-        ? selectedChannel.previewPosts
-        : FALLBACK_POSTS[selectedChannelName] || FALLBACK_POSTS.General;
+    const rawPosts = selectedChannel?.previewPosts?.length
+      ? selectedChannel.previewPosts
+      : FALLBACK_POSTS[selectedChannelName] || FALLBACK_POSTS.General;
 
     return rawPosts.filter((post) => {
       const postKey = post.id || post._id || post.postID;
@@ -279,24 +278,24 @@ export default function ChannelBrowser() {
         </aside>
 
         <main className="channel-browser-v2__main">
-          
-
           {selectedChannel && (
             <>
               <section
                 className="channel-browser-v2__hero"
                 style={{
                   backgroundImage: `linear-gradient(rgba(0,0,0,.28), rgba(0,0,0,.18)), url(${
-                    channelVisual.heroImage || selectedChannel.heroImage || FALLBACK_HERO
+                    channelVisual.heroImage ||
+                    selectedChannel.heroImage ||
+                    FALLBACK_HERO
                   })`,
                 }}
               >
                 <button
-  className="channel__home-button"
-  onClick={() => navigate("/")}
->
-  ← Home
-</button>
+                  className="channel__home-button"
+                  onClick={() => navigate("/")}
+                >
+                  ← Home
+                </button>
 
                 <div className="channel-browser-v2__hero-overlay">
                   <h1 className="channel-browser-v2__hero-title">
@@ -344,14 +343,14 @@ export default function ChannelBrowser() {
                   >
                     💬
                   </Link>
-                  
+
                   <Link
                     to={`/channels/${selectedChannel.channelID || selectedChannel._id || selectedChannel.id}/edit`}
                     className="channel-browser-v2__action channel-browser-v2__action--edit"
                     aria-label="Edit channel"
-                    >
+                  >
                     ✎
-                    </Link>
+                  </Link>
                   <button
                     type="button"
                     className="channel-browser-v2__action channel-browser-v2__action--approve"

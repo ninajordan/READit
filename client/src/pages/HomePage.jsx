@@ -48,7 +48,7 @@ export default function HomePage() {
 
       if (result?.message !== "Like removed") {
         setDisplayPosts((prev) =>
-          prev.filter((item) => item.postID !== post.postID)
+          prev.filter((item) => item.postID !== post.postID),
         );
       }
     } catch (err) {
@@ -70,7 +70,7 @@ export default function HomePage() {
 
       if (result?.message !== "Like removed") {
         setDisplayPosts((prev) =>
-          prev.filter((item) => item.postID !== post.postID)
+          prev.filter((item) => item.postID !== post.postID),
         );
       }
     } catch (err) {
@@ -97,11 +97,16 @@ export default function HomePage() {
           <ProfileCard />
           <section className="home-page__header">
             <div>
-              <h1 className="home-page__title">Today&apos;s anonymous stories</h1>
-              <p className="home-page__subtitle">Swipe left or right to explore.</p>
+              <h1 className="home-page__title">
+                Today&apos;s anonymous stories
+              </h1>
+              <p className="home-page__subtitle">
+                Swipe left or right to explore.
+              </p>
             </div>
             <p className="home-page__meta">
-              Showing {metadata.start} to {metadata.end} of {metadata.total} posts
+              Showing {metadata.start} to {metadata.end} of {metadata.total}{" "}
+              posts
             </p>
           </section>
 
@@ -110,7 +115,9 @@ export default function HomePage() {
           ) : null}
 
           {status === "error" ? (
-            <p className="home-page__status home-page__status--error">{error}</p>
+            <p className="home-page__status home-page__status--error">
+              {error}
+            </p>
           ) : null}
 
           {status === "success" ? (

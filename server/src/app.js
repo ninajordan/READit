@@ -3,10 +3,6 @@ import session from "express-session";
 import passport from "passport";
 import { configurePassport } from "./config/passport.js";
 import usersRouter from "./features/users/users.routes.js";
-import session from "express-session";
-import passport from "passport";
-import { configurePassport } from "./config/passport.js";
-import usersRouter from "./features/users/users.routes.js";
 
 const app = express();
 
@@ -17,7 +13,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "readit-session",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 
 configurePassport();

@@ -3,7 +3,12 @@ import { fetchAllPosts } from "../features/posts/postsApi.js";
 
 export function usePosts({ start = 0, limit = 20 } = {}) {
   const [posts, setPosts] = useState([]);
-  const [metadata, setMetadata] = useState({ total: 0, start: 0, end: 0, limit });
+  const [metadata, setMetadata] = useState({
+    total: 0,
+    start: 0,
+    end: 0,
+    limit,
+  });
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
 
@@ -18,7 +23,7 @@ export function usePosts({ start = 0, limit = 20 } = {}) {
         if (!isActive) return;
         setPosts(Array.isArray(data.posts) ? data.posts : []);
         setMetadata(
-          data.metadata || { total: 0, start: start, end: start, limit: limit }
+          data.metadata || { total: 0, start: start, end: start, limit: limit },
         );
         setStatus("success");
       } catch (err) {

@@ -1,5 +1,10 @@
 .home-page {
-  background: radial-gradient(circle at top, #fdf6ec 0%, #f3e6d2 55%, #e4d6c0 100%);
+  background: radial-gradient(
+    circle at top,
+    #fdf6ec 0%,
+    #f3e6d2 55%,
+    #e4d6c0 100%
+  );
   color: var(--text-dark);
   display: flex;
   flex-direction: column;

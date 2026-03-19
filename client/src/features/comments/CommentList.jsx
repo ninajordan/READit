@@ -9,7 +9,11 @@ export default function CommentList({ comments, onLikeComment }) {
   return (
     <div className="comment-list">
       {comments.map((comment) => (
-        <CommentCard key={comment.commentID} comment={comment} onLike={onLikeComment} />
+        <CommentCard
+          key={comment.commentID}
+          comment={comment}
+          onLike={onLikeComment}
+        />
       ))}
     </div>
   );
