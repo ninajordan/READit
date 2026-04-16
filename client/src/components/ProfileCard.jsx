@@ -9,6 +9,7 @@ export default function ProfileCard({ name = "Guest", handle = "Anonymous" }) {
 
   const displayHandle = storedHandle || handle;
   const displayName = storedUserId ? displayHandle : name;
+  const avatarLabel = displayName?.trim()?.[0]?.toUpperCase() || "?";
 
   async function handleLogout() {
     try {
@@ -23,7 +24,14 @@ export default function ProfileCard({ name = "Guest", handle = "Anonymous" }) {
 
   return (
     <section className="profile-card">
-      <div className="profile-card__avatar">?</div>
+      <button
+        type="button"
+        className="profile-card__avatar"
+        onClick={() => navigate("/profile")}
+        aria-label="Open profile page"
+      >
+        {avatarLabel}
+      </button>
       <div className="profile-card__details">
         <p className="profile-card__label">Profile</p>
         <p className="profile-card__name">{displayName}</p>
