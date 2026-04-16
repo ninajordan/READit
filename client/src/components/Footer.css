@@ -2,9 +2,9 @@
   align-items: center;
   background: var(--panel-dark);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
   gap: 0.75rem;
+  justify-content: center;
   padding: 1rem 1.5rem;
 }
 

@@ -9,6 +9,11 @@
   min-height: calc(100vh - 4.5rem);
 }
 
+.sidebar__top-nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
 .sidebar__home {
   align-items: center;
   background: transparent;
@@ -21,6 +26,13 @@
   height: 40px;
   justify-content: center;
   width: 40px;
+}
+
+.sidebar__home--explore {
+  border-radius: 999px;
+  font-size: 0.95rem;
+  padding: 0 1rem;
+  width: auto;
 }
 
 .sidebar__brand {
@@ -58,6 +70,11 @@
 .sidebar__channels-button--create {
   border-color: rgba(247, 178, 103, 0.5);
   color: #f7b267;
+}
+
+.sidebar__home:hover,
+.sidebar__channels-button:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .sidebar__list {

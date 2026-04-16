@@ -9,23 +9,9 @@ export default function Footer() {
       <button
         type="button"
         className="footer__tab"
-        onClick={() => navigate("/channels")}
-      >
-        Channels
-      </button>
-      <button
-        type="button"
-        className="footer__tab"
         onClick={() => navigate("/create")}
       >
         Create
-      </button>
-      <button
-        type="button"
-        className="footer__tab"
-        onClick={() => navigate("/profile")}
-      >
-        Profile
       </button>
     </footer>
   );
