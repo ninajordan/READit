@@ -4,10 +4,6 @@ import "./PostStack.css";
 
 export default function PostStack({
   posts,
-  onPrev,
-  onNext,
-  canPrev,
-  canNext,
   onOpenPost,
   onLike,
   onDislike,
@@ -29,24 +25,28 @@ export default function PostStack({
   const visiblePosts = useMemo(() => {
     if (!posts || posts.length === 0) return [];
     const stack = [];
-    for (let offset = 0; offset < 3; offset += 1) {
-      const item = posts[index + offset];
-      if (item) stack.push({ item, offset });
+    const count = Math.min(3, posts.length);
+
+    for (let offset = 0; offset < count; offset += 1) {
+      const item = posts[(index + offset) % posts.length];
+      stack.push({ item, offset });
     }
+
     return stack;
   }, [posts, index]);
 
   function goNext() {
-    setIndex((current) => Math.min(current + 1, posts.length - 1));
+    setIndex((current) => (current + 1) % posts.length);
   }
 
   function goPrev() {
-    setIndex((current) => Math.max(current - 1, 0));
+    setIndex((current) => (current - 1 + posts.length) % posts.length);
   }
 
   function triggerSwipe(direction, action) {
     if (!posts || posts.length === 0) return;
     if (swipeDirection) return;
+
     setSwipeDirection(direction);
     swipeTimer.current = setTimeout(async () => {
       await action?.();
@@ -60,12 +60,14 @@ export default function PostStack({
 
   function handlePointerUp(event) {
     if (startX.current === null) return;
+
     const delta = event.clientX - startX.current;
     if (delta < -80) {
       goNext();
     } else if (delta > 80) {
       goPrev();
     }
+
     startX.current = null;
   }
 
@@ -79,12 +81,12 @@ export default function PostStack({
         <button
           type="button"
           className="post-stack__arrow"
-          onClick={onPrev}
-          disabled={!canPrev}
-          aria-label="Previous posts"
+          onClick={goPrev}
+          aria-label="Previous post"
         >
           &lt;
         </button>
+
         <div
           className="post-stack__cards"
           onPointerDown={handlePointerDown}
@@ -92,7 +94,7 @@ export default function PostStack({
         >
           {visiblePosts.map(({ item, offset }) => (
             <div
-              key={item.postID}
+              key={`${item.postID}-${offset}`}
               className={`post-stack__card post-stack__card--${offset}${
                 offset === 0 && swipeDirection
                   ? ` post-stack__card--swipe-${swipeDirection}`
@@ -107,16 +109,17 @@ export default function PostStack({
             </div>
           ))}
         </div>
+
         <button
           type="button"
           className="post-stack__arrow"
-          onClick={onNext}
-          disabled={!canNext}
-          aria-label="Next posts"
+          onClick={goNext}
+          aria-label="Next post"
         >
           &gt;
         </button>
       </div>
+
       <div className="post-stack__actions">
         <button
           type="button"
@@ -126,13 +129,15 @@ export default function PostStack({
         >
           Like
         </button>
+
         <button
           type="button"
           className="post-stack__button post-stack__button--ghost"
-          onClick={() => onOpenPost?.(posts[index])}
+          onClick={goNext}
         >
-          Comment
+          Skip
         </button>
+
         <button
           type="button"
           className="post-stack__button"
