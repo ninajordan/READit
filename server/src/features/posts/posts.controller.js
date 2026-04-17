@@ -139,3 +139,28 @@ export async function createPost(req, res) {
     res.status(500).json({ error: true, message: String(error) });
   }
 }
+
+export async function userCreatedPosts(req, res) {
+
+    try {
+        const { userID } = req.params;
+        const createdPosts = await postsService.getCreatedPosts(userID);
+
+        if (createdPosts.error === true && createdPosts.status === 404) {
+            return res.status(404).json({ error: true, message: "user not found" });
+        }
+
+        const posts = createdPosts.posts;
+        if (posts.length === 0) {
+        return res
+            .status(200)
+            .json({ error: false, message: "No Created Posts yet" });
+        }
+
+        return res.status(200).json({ error: false, posts: posts });
+    } catch (error) {
+        return res
+          .status(500)
+          .json({ error: true, message: "internal server error" });
+    }
+}
