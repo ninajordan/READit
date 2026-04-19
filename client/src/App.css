@@ -1,16 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;700&display=swap");
 
+
 :root {
   --font-display: "Fraunces", "Times New Roman", serif;
   --font-body: "Space Grotesk", "Helvetica Neue", sans-serif;
-  --text-dark: #1b1b1b;
-  --text-muted-dark: #4b4b4b;
-  --text-on-dark: #f5f5f5;
-  --text-muted: rgba(255, 255, 255, 0.6);
-  --panel-dark: #0f1112;
+
+  --bg-page: #fcfdff;
+  --bg-page-gradient: radial-gradient(
+    circle at top,
+    #fcfdff 0%,
+    #f7f9fc 55%,
+    #eef2f7 100%
+  );
+
+  --text-dark: #142033;
+  --text-muted-dark: #5c6b80;
+  --text-on-dark: #f4f8ff;
+  --text-muted: rgba(244, 248, 255, 0.68);
+
+  --panel-dark: #0f2747;
+  --panel-dark-deep: #163761;
   --panel-light: #ffffff;
-  --accent: #f7b267;
-  --accent-deep: #b34d2e;
+
+  --accent: #cfe7ff;
+  --accent-deep: #2f3f56;
 }
 
 * {
@@ -20,7 +33,7 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: #fdf6ec;
+  background: var(--bg-page);
 }
 
 button,

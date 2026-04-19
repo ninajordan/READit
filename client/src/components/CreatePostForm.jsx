@@ -1,48 +1,49 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../features/posts/createPostApi.js";
+import { useChannels } from "../features/channels/useChannels.js";
 import "./CreatePostForm.css";
 
-export default function CreatePostForm() {
+export default function CreatePostForm({ initialChannelID }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [channelID, setChannelID] = useState(initialChannelID || "");
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+
+  const { channels } = useChannels();
 
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const trimmedTitle = title.trim();
-    const trimmedBody = body.trim();
-    if (!trimmedTitle || !trimmedBody) {
+    if (!title.trim() || !body.trim()) {
       setError("Title and body are required.");
+      return;
+    }
+
+    if (!channelID) {
+      setError("Please select a channel.");
       return;
     }
 
     try {
       setStatus("loading");
       setError("");
-      setSuccess("");
 
-      const channelID = sessionStorage.getItem("channelID") || "-1";
       const posterID = sessionStorage.getItem("userID");
       const posterName = sessionStorage.getItem("user_anonymity");
 
       await createPost({
-        postTitle: trimmedTitle,
-        postBody: trimmedBody,
+        postTitle: title.trim(),
+        postBody: body.trim(),
         channelID,
         posterID,
         posterName,
       });
 
-      setSuccess("Post created successfully.");
-      setTitle("");
-      setBody("");
-      setStatus("success");
-      navigate("/");
+      // redirect to the channel where the post was made - P. 4 change
+      navigate(`/channels/${channelID}`);
     } catch (err) {
       setStatus("error");
       setError(err.message || "Failed to create post.");
@@ -51,27 +52,41 @@ export default function CreatePostForm() {
 
   return (
     <form className="create-post" onSubmit={handleSubmit}>
-      <label className="create-post__label" htmlFor="post-title">
-        Title
-      </label>
+      {!initialChannelID && (
+        <>
+          <label className="create-post__label">Select Channel</label>
+          <select
+            className="create-post__input"
+            value={channelID}
+            onChange={(e) => setChannelID(e.target.value)}
+          >
+            <option value="">-- Choose a channel --</option>
+            {channels.map((c) => {
+              const id = c.channelID || c._id || c.id;
+              const name = c.channelName || c.name;
+              return (
+                <option key={id} value={id}>
+                  #{name}
+                </option>
+              );
+            })}
+          </select>
+        </>
+      )}
+
+      <label className="create-post__label">Title</label>
       <input
-        id="post-title"
         className="create-post__input"
-        placeholder="Enter title"
         value={title}
-        onChange={(event) => setTitle(event.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
       />
 
-      <label className="create-post__label" htmlFor="post-body">
-        Body
-      </label>
+      <label className="create-post__label">Body</label>
       <textarea
-        id="post-body"
         className="create-post__textarea"
-        placeholder="Write your post"
         rows={6}
         value={body}
-        onChange={(event) => setBody(event.target.value)}
+        onChange={(e) => setBody(e.target.value)}
       />
 
       <button
@@ -81,8 +96,8 @@ export default function CreatePostForm() {
       >
         {status === "loading" ? "Posting..." : "Submit"}
       </button>
-      {error ? <p className="create-post__error">{error}</p> : null}
-      {success ? <p className="create-post__success">{success}</p> : null}
+
+      {error && <p className="create-post__error">{error}</p>}
     </form>
   );
 }
