@@ -1,10 +1,5 @@
 .channel-page {
-  background: radial-gradient(
-    circle at top,
-    #fdf6ec 0%,
-    #f3e6d2 55%,
-    #e4d6c0 100%
-  );
+  background: var(--bg-page-gradient);
   color: var(--text-dark);
   display: flex;
   flex-direction: column;
@@ -51,7 +46,7 @@
 }
 
 .channel-page__status--error {
-  color: #b3413a;
+  color: #5b7aa6;
 }
 
 .channel-page__grid {
@@ -112,10 +107,26 @@
   line-height: 1.5;
 }
 
+.channel-detail__create-post {
+  align-self: flex-start;
+  background: #dce8f6;
+  border: 1px solid rgba(47, 63, 86, 0.15);
+  border-radius: 999px;
+  color: #20344d;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.65rem 1.2rem;
+}
+
+.channel-detail__create-post:hover {
+  background: #cfe0f2;
+}
 .channel-page__button {
   align-self: flex-start;
   background: transparent;
-  border: 1px solid rgba(27, 27, 27, 0.2);
+  border: 1px solid rgba(20, 32, 51, 0.18);
   border-radius: 999px;
   cursor: pointer;
   padding: 0.4rem 1rem;

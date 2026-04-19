@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // pj 4 improvement nav to channel after post creation
 import Sidebar from "../components/Sidebar.jsx";
 import Footer from "../components/Footer.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
@@ -14,6 +14,7 @@ export default function ChannelDetailPage() {
   const { id } = useParams();
   const [channel, setChannel] = useState(null);
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
   const [metadata, setMetadata] = useState({
     total: 0,
     start: 0,
@@ -189,7 +190,18 @@ export default function ChannelDetailPage() {
               </div>
             ) : null}
           </section>
-
+          <div className="channel-detail__actions">
+          <button
+  type="button"
+  className="channel-detail__create-post"
+  onClick={() => {
+    sessionStorage.setItem("channelID", id);
+    navigate("/create");
+  }}
+>
+  Create Post
+</button>
+</div>
           <p className="channel-detail__meta">
             Showing {metadata.start}...{metadata.end} of {metadata.total} posts
           </p>
@@ -217,7 +229,7 @@ export default function ChannelDetailPage() {
           ) : null}
         </main>
       </div>
-      <Footer />
+       {/* <Footer /> */}
       <PostModal postID={activePostID} onClose={() => setActivePostID(null)} />
     </div>
   );
