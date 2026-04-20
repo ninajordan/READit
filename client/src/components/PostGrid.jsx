@@ -1,13 +1,9 @@
 import PostCard from "./PostCard.jsx";
 import "./PostGrid.css";
 
-export default function PostGrid({
-  posts,
-  onOpenPost,
-  emptyMessage = "No posts yet.",
-}) {
+export default function PostGrid({ posts, onOpenPost }) {
   if (!posts || posts.length === 0) {
-    return <p className="post-grid__empty">{emptyMessage}</p>;
+    return <p className="post-grid__empty">No liked posts yet.</p>;
   }
 
   return (

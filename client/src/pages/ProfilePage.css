@@ -1,10 +1,5 @@
 .profile-page {
-  background: radial-gradient(
-    circle at top,
-    #fdf6ec 0%,
-    #f3e6d2 55%,
-    #e4d6c0 100%
-  );
+  background: var(--bg-page-gradient);
   color: var(--text-dark);
   display: flex;
   flex-direction: column;
@@ -30,19 +25,11 @@
   gap: 0.4rem;
 }
 
-.profile-page__header--secondary {
-  margin-top: 1rem;
-}
-
 .profile-page__title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 2vw + 1.6rem, 2.8rem);
   margin: 0;
   color: var(--accent-deep);
-}
-
-.profile-page__title--section {
-  font-size: clamp(1.6rem, 1.4vw + 1.25rem, 2.2rem);
 }
 
 .profile-page__subtitle {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";
+import Footer from "../components/Footer.jsx";// footer removed 
 import ProfileCard from "../components/ProfileCard.jsx";
 import CreatePostForm from "../components/CreatePostForm.jsx";
 import { fetchChannelById } from "../features/channels/channelsApi.js";
@@ -22,7 +22,7 @@ export default function CreatePage() {
           response?.channelData?.channel || response?.channel || response;
         setChannelName(channel?.channelName || "");
       } catch {
-        // ignore errors and keep default
+        
       }
     }
 
@@ -48,10 +48,10 @@ export default function CreatePage() {
           {channelName ? (
             <p className="create-page__note">Adding post to #{channelName}</p>
           ) : null}
-          <CreatePostForm />
+          <CreatePostForm initialChannelID={sessionStorage.getItem("channelID")} />
         </main>
       </div>
-      <Footer />
+      {/* <Footer /> */} 
     </div>
   );
 }
