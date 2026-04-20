@@ -1,5 +1,5 @@
 .sidebar {
-  background: linear-gradient(180deg, var(--panel-dark) 0%, #151718 100%);
+  background: linear-gradient(180deg, var(--panel-dark) 0%, var(--panel-dark-deep) 100%);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-on-dark);
   display: flex;
@@ -9,10 +9,15 @@
   min-height: calc(100vh - 4.5rem);
 }
 
+.sidebar__top-nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
 .sidebar__home {
   align-items: center;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(247, 245, 255, 0.22);
   border-radius: 12px;
   color: var(--text-on-dark);
   cursor: pointer;
@@ -21,6 +26,13 @@
   height: 40px;
   justify-content: center;
   width: 40px;
+}
+
+.sidebar__home--explore {
+  border-radius: 999px;
+  font-size: 0.95rem;
+  padding: 0 1rem;
+  width: auto;
 }
 
 .sidebar__brand {
@@ -45,7 +57,7 @@
 
 .sidebar__channels-button {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(247, 245, 255, 0.2);
   border-radius: 999px;
   color: var(--text-on-dark);
   cursor: pointer;
@@ -56,8 +68,13 @@
 }
 
 .sidebar__channels-button--create {
-  border-color: rgba(247, 178, 103, 0.5);
-  color: #f7b267;
+  border-color: rgba(207, 231, 255, 0.55);
+  color: var(--accent);
+}
+
+.sidebar__home:hover,
+.sidebar__channels-button:hover {
+  background: rgba(247, 245, 255, 0.08);
 }
 
 .sidebar__list {
@@ -76,7 +93,7 @@
 }
 
 .sidebar__status--error {
-  color: #f0b3a4;
+  color: #d9c8ff;
 }
 
 .sidebar__item {
@@ -96,8 +113,8 @@
 }
 
 .sidebar__link:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(247, 245, 255, 0.16);
+  background: rgba(247, 245, 255, 0.05);
 }
 
 @media (max-width: 900px) {

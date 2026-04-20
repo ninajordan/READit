@@ -351,3 +351,56 @@ export async function deletePosts(postID, userID) {
     return {status: 500, error: true, deleted: false, message: error.message}
   }
 }
+export async function getCreatedPosts(userID) {
+  try {
+    const db = getDatabase();
+
+    const user = await db.collection("users").findOne({ userID: userID });
+    if (user === null) {
+      return { error: true, status: 404 };
+    }
+
+    const userPosts = await db
+      .collection("posts")
+      .find({ posterID: userID })
+      .toArray();
+
+    console.log("[DEBUG] User Posts: ", userPosts);
+    if (userPosts.length === 0) {
+      return { posts: [], error: false, status: 200 };
+    }
+
+  
+    const postIDs = new Set();
+    for (const post of userPosts) {
+      postIDs.add(post.postID);
+    }
+
+    const userCreatedPosts = await db
+      .collection("posts")
+      .find({ postID: { $in: [...postIDs] } })
+      .toArray();
+    const userIDs = userCreatedPosts.map((p) => p.posterID);
+
+    const users = await db
+      .collection("users")
+      .find({ userID: { $in: userIDs } })
+      .toArray();
+    const userMap = {};
+    for (const user of users) {
+      userMap[user.userID] = user.user_anonymity;
+    }
+
+    for (let i = 0; i < userCreatedPosts.length; i++) {
+      userCreatedPosts[i]["posterName"] = userMap[userCreatedPosts[i]["posterID"]];
+    }
+    return {
+      posts: userCreatedPosts,
+      error: false,
+      status: 200,
+    };
+  } catch (error) {
+    console.error("Error: ", error);
+    return { error: true, status: 500 };
+  }
+}

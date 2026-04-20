@@ -1,10 +1,5 @@
 .home-page {
-  background: radial-gradient(
-    circle at top,
-    #fdf6ec 0%,
-    #f3e6d2 55%,
-    #e4d6c0 100%
-  );
+  background: var(--bg-page-gradient);
   color: var(--text-dark);
   display: flex;
   flex-direction: column;
@@ -58,7 +53,7 @@
 }
 
 .home-page__status--error {
-  color: #b3413a;
+  color: #6b8fc9;
 }
 
 @media (max-width: 900px) {

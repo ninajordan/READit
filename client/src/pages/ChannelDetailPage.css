@@ -1,10 +1,5 @@
 .channel-detail {
-  background: radial-gradient(
-    circle at top,
-    #fdf6ec 0%,
-    #f3e6d2 55%,
-    #e4d6c0 100%
-  );
+  background: var(--bg-page-gradient);
   color: var(--text-dark);
   display: flex;
   flex-direction: column;
@@ -94,7 +89,7 @@
 }
 
 .channel-detail__status--error {
-  color: #b3413a;
+  color: #5b7aa6;
 }
 
 .channel-detail__meta {
