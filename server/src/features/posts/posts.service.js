@@ -243,6 +243,37 @@ export async function likedPosts(userID) {
   }
 }
 
+export async function createdPosts(userID) {
+  try {
+    const db = getDatabase();
+
+    const user = await db.collection("users").findOne({ userID });
+    if (user === null) {
+      return { error: true, status: 404 };
+    }
+
+    const userCreatedPosts = await db
+      .collection("posts")
+      .find({ posterID: userID })
+      .sort({ postID: -1 })
+      .toArray();
+
+    for (let i = 0; i < userCreatedPosts.length; i++) {
+      const postBody = userCreatedPosts[i].postBody;
+      userCreatedPosts[i].preview = createPreview(postBody);
+      userCreatedPosts[i].posterName = user.user_anonymity;
+    }
+
+    return {
+      posts: userCreatedPosts,
+      error: false,
+      status: 200,
+    };
+  } catch (error) {
+    return { error: true, status: 500 };
+  }
+}
+
 export async function createPostObject(title, body, poster_id, channelID) {
   try {
     const db = getDatabase();
@@ -279,5 +310,44 @@ export async function createPostObject(title, body, poster_id, channelID) {
       status: 500,
       message: String(error),
     };
+  }
+}
+
+export async function deletePosts(postID, userID) {
+  try {
+    const db = getDatabase();
+
+    if (!postID) {
+      return {
+        status: 400,
+        error: true,
+        deleted: false,
+        message: "Post ID is required",
+      };
+    }
+
+    const posting = await db.collection("posts").findOne({ postID: postID });
+
+    if (posting === null) {
+      return {status: 404, error: true, deleted: false, message: "Post not found"}
+    }
+
+    const posterID = posting.posterID;
+
+    let deleted = null;
+    if (userID != posterID) {
+      return {status: 401, error: true, deleted: false, message: "User unaouthorized to delete post"}
+    } else {
+      deleted = await db.collection("posts").deleteOne(posting);
+    }
+    
+    if (deleted) {
+      return {status: 200, error: false, deleted: true, message: "Deleted post"}
+    } else {
+      return {status: 500, error: true, deleted: false, message: "Error in deleting post"}
+    }
+    
+  } catch (error) {
+    return {status: 500, error: true, deleted: false, message: error.message}
   }
 }

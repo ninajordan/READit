@@ -1,9 +1,14 @@
 import PostCard from "./PostCard.jsx";
 import "./PostGrid.css";
 
-export default function PostGrid({ posts, onOpenPost }) {
+export default function PostGrid({
+  posts,
+  onOpenPost,
+  emptyMessage = "No posts yet.",
+  action,
+}) {
   if (!posts || posts.length === 0) {
-    return <p className="post-grid__empty">No liked posts yet.</p>;
+    return <p className="post-grid__empty">{emptyMessage}</p>;
   }
 
   return (
@@ -14,6 +19,14 @@ export default function PostGrid({ posts, onOpenPost }) {
             post={post}
             isActive={false}
             onSelect={() => onOpenPost?.(post)}
+            action={
+              action
+                ? {
+                    ...action,
+                    onClick: () => action.onClick?.(post),
+                  }
+                : null
+            }
           />
         </div>
       ))}

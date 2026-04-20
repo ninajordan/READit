@@ -24,6 +24,12 @@
   padding: 3rem 4vw;
 }
 
+.profile-page__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 .profile-page__header {
   display: flex;
   flex-direction: column;
