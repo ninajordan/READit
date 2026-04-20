@@ -98,7 +98,7 @@ export default function ChannelDetailPage() {
   }, [posts]);
 
   const canPrev = metadata.start > 0;
-  const canNext = metadata.end < metadata.total;
+  const canNext = metadata.end + 1 < metadata.total;
 
   function handlePrev() {
     if (!canPrev) return;
@@ -107,7 +107,7 @@ export default function ChannelDetailPage() {
 
   function handleNext() {
     if (!canNext) return;
-    setStart(metadata.end);
+    setStart(metadata.end + 1);
   }
 
   async function handleLikePost(post) {

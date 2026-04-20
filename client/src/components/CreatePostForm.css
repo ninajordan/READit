@@ -31,6 +31,17 @@
   border-color: var(--accent);
 }
 
+.create-post__counter {
+  color: var(--text-muted-dark);
+  font-size: 0.85rem;
+  margin: -0.2rem 0 0.2rem;
+  text-align: right;
+}
+
+.create-post__counter--invalid {
+  color: #b3413a;
+}
+
 .create-post__button {
   align-items: center;
   background: var(--accent);
@@ -42,6 +53,11 @@
   font-size: 1rem;
   justify-content: center;
   padding: 0.7rem 1.5rem;
+}
+
+.create-post__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .create-post__checkbox {
