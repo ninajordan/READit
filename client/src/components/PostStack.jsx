@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import PostCard from "./PostCard.jsx";
+import { useGlobalShortcuts } from "../hooks/useGlobalShortcuts.js";
 import "./PostStack.css";
 
 export default function PostStack({
@@ -11,6 +12,7 @@ export default function PostStack({
   onOpenPost,
   onLike,
   onDislike,
+  keyboardEnabled = true,
 }) {
   const [index, setIndex] = useState(0);
   const startX = useRef(null);
@@ -38,6 +40,13 @@ export default function PostStack({
 
     return stack;
   }, [posts, index]);
+
+  const hasPosts = !!posts && posts.length > 0;
+  const activePost = hasPosts ? posts[index] : null;
+  const canSkip = hasPosts && index < posts.length - 1 && !swipeDirection;
+  const canUsePrevArrow = typeof onPrev === "function" ? canPrev : index > 0;
+  const canUseNextArrow =
+    typeof onNext === "function" ? canNext : hasPosts && index < posts.length - 1;
 
   function goNext() {
     if (!posts || index >= posts.length - 1) return;
@@ -77,15 +86,6 @@ export default function PostStack({
     startX.current = null;
   }
 
-  if (!posts || posts.length === 0) {
-    return <p className="post-stack__empty">No posts available.</p>;
-  }
-
-  const activePost = posts[index];
-  const canSkip = index < posts.length - 1 && !swipeDirection;
-  const canUsePrevArrow = typeof onPrev === "function" ? canPrev : index > 0;
-  const canUseNextArrow = typeof onNext === "function" ? canNext : index < posts.length - 1;
-
   function handlePrevArrow() {
     if (typeof onPrev === "function") {
       if (!canPrev) return;
@@ -104,6 +104,58 @@ export default function PostStack({
     }
 
     goNext();
+  }
+
+  useGlobalShortcuts([
+    {
+      combo: ["<"],
+      enabled: keyboardEnabled && hasPosts,
+      handler: handlePrevArrow,
+    },
+    {
+      combo: [">"],
+      enabled: keyboardEnabled && hasPosts,
+      handler: handleNextArrow,
+    },
+    {
+      combo: ["arrowleft"],
+      enabled: keyboardEnabled && hasPosts,
+      handler: handlePrevArrow,
+    },
+    {
+      combo: ["arrowright"],
+      enabled: keyboardEnabled && hasPosts,
+      handler: handleNextArrow,
+    },
+    {
+      combo: ["^"],
+      enabled: keyboardEnabled && canSkip,
+      handler: () => triggerSwipe("up", goNext),
+    },
+    {
+      combo: ["arrowup"],
+      enabled: keyboardEnabled && canSkip,
+      handler: () => triggerSwipe("up", goNext),
+    },
+    {
+      combo: ["enter"],
+      enabled: keyboardEnabled && !!activePost,
+      handler: () => onOpenPost?.(activePost),
+    },
+    {
+      combo: ["control", "shift", "l"],
+      enabled: keyboardEnabled && !!activePost,
+      handler: () => triggerSwipe("right", () => onLike?.(activePost)),
+    },
+    {
+      combo: ["control", "shift", "d"],
+      enabled: keyboardEnabled && !!activePost,
+      handler: () => triggerSwipe("left", () => onDislike?.(activePost)),
+    },
+  ]);
+
+  if (!hasPosts) {
+    return <p className="post-stack__empty">No posts available.</p>;
   }
 
   return (

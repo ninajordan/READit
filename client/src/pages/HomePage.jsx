@@ -126,6 +126,7 @@ export default function HomePage() {
               onNext={handleNext}
               canPrev={canPrev}
               canNext={canNext}
+              keyboardEnabled={!activePostID}
               onOpenPost={(post) => setActivePostID(post.postID)}
               onLike={handleLikePost}
               onDislike={handleDislikePost}

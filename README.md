@@ -44,6 +44,53 @@ Architecture:
 
 ---
 
+## Keyboard friendliness (Keyboard shortcuts)
+
+READit is designed to be **keyboard-friendly**. You can navigate between major areas, browse content, and open posts without using the mouse.
+
+### Global navigation (works from most pages)
+
+- **Ctrl + H**: Go to **Homepage**
+- **Ctrl + Shift + C**: Go to **Channels**
+- **Ctrl + Shift + P**: Go to **Profile**
+- **Shift + C**: Go to **Create Channel**
+- **Shift + P**: Go to **Create Post** (enabled on **Homepage** and **Channel Detail** pages)
+
+### Homepage / Post stack browsing
+
+When the post stack is visible on the homepage:
+
+- **ArrowLeft** or **<**: Previous post
+- **ArrowRight** or **>**: Next post
+- **ArrowUp** or **^**: Skip (go to next post)
+- **Enter**: Open the active post (modal)
+- **Ctrl + Shift + L**: Like the active post
+- **Ctrl + Shift + D**: Dislike the active post
+
+### Channels page
+
+On the channels grid:
+
+- **Arrow keys**: Move the channel highlight
+- **Enter**: Open the highlighted channel
+
+### Profile page
+
+On your profile (created + liked posts):
+
+- **Arrow keys**: Move the post highlight
+- **Enter**: Open the highlighted post
+- **Ctrl + Shift + D**: Delete the highlighted **created** post (only when no post modal is open)
+
+### Post modal (post details + comments)
+
+When a post is open in the modal:
+
+- **Esc**: Close the modal
+- **Tab / Shift+Tab**: Focus is trapped within the modal (accessible keyboard navigation)
+
+---
+
 ## Instructions to use and enjoy READit as a user and screenshots
 
 ### Register & login

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
 import PostGrid from "../components/PostGrid.jsx";
@@ -6,6 +6,7 @@ import PostModal from "../components/PostModal.jsx";
 import { useLikedPosts } from "../hooks/useLikedPosts.js";
 import { useCreatedPosts } from "../hooks/useCreatedPosts.js";
 import { deletePost } from "../features/posts/createdPostsApi.js";
+import { useGlobalShortcuts } from "../hooks/useGlobalShortcuts.js";
 import "./ProfilePage.css";
 
 export default function ProfilePage() {
@@ -19,6 +20,15 @@ export default function ProfilePage() {
   } = useCreatedPosts(userID);
   const [activePostID, setActivePostID] = useState(null);
   const [deleteError, setDeleteError] = useState("");
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const cardsRef = useRef([]);
+
+  const allPosts = useMemo(
+    () => [...createdPosts, ...likedPosts],
+    [createdPosts, likedPosts],
+  );
+  const createdCount = createdPosts.length;
+  const likedOffset = createdCount;
 
   async function handleDeletePost(post) {
     try {
@@ -30,6 +40,59 @@ export default function ProfilePage() {
       setDeleteError(err.message || "Failed to delete post");
     }
   }
+
+  useEffect(() => {
+    if (!allPosts.length) return;
+    setHighlightedIndex((current) => Math.min(current, allPosts.length - 1));
+  }, [allPosts.length]);
+
+  useEffect(() => {
+    cardsRef.current[highlightedIndex]?.focus?.();
+  }, [highlightedIndex]);
+
+  function moveHighlight(delta) {
+    if (!allPosts.length) return;
+    setHighlightedIndex((current) => {
+      const nextIndex = current + delta;
+      return Math.max(0, Math.min(allPosts.length - 1, nextIndex));
+    });
+  }
+
+  useGlobalShortcuts([
+    {
+      combo: ["arrowright"],
+      enabled: !activePostID && allPosts.length > 0,
+      handler: () => moveHighlight(1),
+    },
+    {
+      combo: ["arrowleft"],
+      enabled: !activePostID && allPosts.length > 0,
+      handler: () => moveHighlight(-1),
+    },
+    {
+      combo: ["arrowdown"],
+      enabled: !activePostID && allPosts.length > 0,
+      handler: () => moveHighlight(1),
+    },
+    {
+      combo: ["arrowup"],
+      enabled: !activePostID && allPosts.length > 0,
+      handler: () => moveHighlight(-1),
+    },
+    {
+      combo: ["enter"],
+      enabled: !activePostID && allPosts.length > 0,
+      handler: () => setActivePostID(allPosts[highlightedIndex]?.postID || null),
+    },
+    {
+      combo: ["control", "shift", "d"],
+      enabled:
+        !activePostID &&
+        highlightedIndex < createdCount &&
+        !!createdPosts[highlightedIndex],
+      handler: () => handleDeletePost(createdPosts[highlightedIndex]),
+    },
+  ]);
 
   return (
     <div className="profile-page">
@@ -59,6 +122,11 @@ export default function ProfilePage() {
                 posts={createdPosts}
                 emptyMessage="No created posts yet."
                 onOpenPost={(post) => setActivePostID(post.postID)}
+                highlightedIndex={highlightedIndex}
+                onHighlightChange={setHighlightedIndex}
+                getCardRef={(index) => (element) => {
+                  cardsRef.current[index] = element;
+                }}
                 action={{
                   label: "Delete post",
                   icon: (
@@ -99,6 +167,12 @@ export default function ProfilePage() {
                 posts={likedPosts}
                 onOpenPost={(post) => setActivePostID(post.postID)}
                 emptyMessage="No liked posts yet."
+                highlightedIndex={highlightedIndex}
+                indexOffset={likedOffset}
+                onHighlightChange={setHighlightedIndex}
+                getCardRef={(index) => (element) => {
+                  cardsRef.current[index] = element;
+                }}
               />
             ) : null}
           </section>
