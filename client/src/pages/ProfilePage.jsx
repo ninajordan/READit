@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx"; // footer removed p.4 change
 import ProfileCard from "../components/ProfileCard.jsx";
 import PostGrid from "../components/PostGrid.jsx";
 import PostModal from "../components/PostModal.jsx";
@@ -81,45 +80,30 @@ export default function ProfilePage() {
             ) : null}
           </section>
 
-          {likedStatus === "loading" ? (
-            <p className="profile-page__note">Loading liked posts...</p>
-          ) : null}
-          {likedStatus === "error" ? (
-            <p className="profile-page__note">{likedError}</p>
-          ) : null}
-          {likedStatus === "success" ? (
-            <PostGrid
-              posts={likedPosts}
-              onOpenPost={(post) => setActivePostID(post.postID)}
-              emptyMessage="No liked posts yet."
-            />
-          ) : null}
+          <section className="profile-page__section">
+            <div className="profile-page__header">
+              <h2 className="profile-page__title">Liked posts</h2>
+              <p className="profile-page__subtitle">
+                Everything you have liked so far.
+              </p>
+            </div>
 
-          <section className="profile-page__header profile-page__header--secondary">
-            <h2 className="profile-page__title profile-page__title--section">
-              Posts Created by you
-            </h2>
-            <p className="profile-page__subtitle">
-              Your anonymous posts, all in one place.
-            </p>
+            {likedStatus === "loading" ? (
+              <p className="profile-page__note">Loading liked posts...</p>
+            ) : null}
+            {likedStatus === "error" ? (
+              <p className="profile-page__note">{likedError}</p>
+            ) : null}
+            {likedStatus === "success" ? (
+              <PostGrid
+                posts={likedPosts}
+                onOpenPost={(post) => setActivePostID(post.postID)}
+                emptyMessage="No liked posts yet."
+              />
+            ) : null}
           </section>
-
-          {createdStatus === "loading" ? (
-            <p className="profile-page__note">Loading created posts...</p>
-          ) : null}
-          {createdStatus === "error" ? (
-            <p className="profile-page__note">{createdError}</p>
-          ) : null}
-          {createdStatus === "success" ? (
-            <PostGrid
-              posts={createdPosts}
-              onOpenPost={(post) => setActivePostID(post.postID)}
-              emptyMessage="No created posts yet."
-            />
-          ) : null}
         </main>
       </div>
-      {/* <Footer /> */}
       <PostModal postID={activePostID} onClose={() => setActivePostID(null)} />
     </div>
   );

@@ -334,73 +334,54 @@ export async function deletePosts(postID, userID) {
 
     const posterID = posting.posterID;
 
-    let deleted = null;
     if (userID != posterID) {
-      return {status: 401, error: true, deleted: false, message: "User unaouthorized to delete post"}
-    } else {
-      deleted = await db.collection("posts").deleteOne(posting);
-    }
-    
-    if (deleted) {
-      return {status: 200, error: false, deleted: true, message: "Deleted post"}
-    } else {
-      return {status: 500, error: true, deleted: false, message: "Error in deleting post"}
-    }
-    
-  } catch (error) {
-    return {status: 500, error: true, deleted: false, message: error.message}
-  }
-}
-export async function getCreatedPosts(userID) {
-  try {
-    const db = getDatabase();
-
-    const user = await db.collection("users").findOne({ userID: userID });
-    if (user === null) {
-      return { error: true, status: 404 };
+      return {
+        status: 401,
+        error: true,
+        deleted: false,
+        message: "User unaouthorized to delete post",
+      };
     }
 
-    const userPosts = await db
-      .collection("posts")
-      .find({ posterID: userID })
+    const comments = await db
+      .collection("comments")
+      .find({ postID: postID })
       .toArray();
+    const commentIDs = comments.map((comment) => comment.commentID);
 
-    console.log("[DEBUG] User Posts: ", userPosts);
-    if (userPosts.length === 0) {
-      return { posts: [], error: false, status: 200 };
+    await db.collection("comments").deleteMany({ postID: postID });
+    await db.collection("likes").deleteMany({ parentID: postID, likeType: "post" });
+
+    if (commentIDs.length > 0) {
+      await db.collection("likes").deleteMany({
+        parentID: { $in: commentIDs },
+        likeType: "comment",
+      });
     }
 
-  
-    const postIDs = new Set();
-    for (const post of userPosts) {
-      postIDs.add(post.postID);
+    const deleted = await db.collection("posts").deleteOne({ postID: postID });
+
+    if (deleted.deletedCount === 1) {
+      return {
+        status: 200,
+        error: false,
+        deleted: true,
+        message: "Deleted post",
+      };
     }
 
-    const userCreatedPosts = await db
-      .collection("posts")
-      .find({ postID: { $in: [...postIDs] } })
-      .toArray();
-    const userIDs = userCreatedPosts.map((p) => p.posterID);
-
-    const users = await db
-      .collection("users")
-      .find({ userID: { $in: userIDs } })
-      .toArray();
-    const userMap = {};
-    for (const user of users) {
-      userMap[user.userID] = user.user_anonymity;
-    }
-
-    for (let i = 0; i < userCreatedPosts.length; i++) {
-      userCreatedPosts[i]["posterName"] = userMap[userCreatedPosts[i]["posterID"]];
-    }
     return {
-      posts: userCreatedPosts,
-      error: false,
-      status: 200,
+      status: 500,
+      error: true,
+      deleted: false,
+      message: "Error in deleting post",
     };
   } catch (error) {
-    console.error("Error: ", error);
-    return { error: true, status: 500 };
+    return {
+      status: 500,
+      error: true,
+      deleted: false,
+      message: error.message,
+    };
   }
 }

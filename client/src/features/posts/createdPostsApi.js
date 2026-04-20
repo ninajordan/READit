@@ -14,7 +14,7 @@ export async function fetchCreatedPosts(userID) {
 
 export async function deletePost({ postID, userID }) {
   const baseUrl = import.meta.env.VITE_API_URL || "";
-  const response = await fetch(`${baseUrl}/api/posts/delete-post?postID=${postID}`, {
+  const response = await fetch(`${baseUrl}/api/posts/delete-post/${postID}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
