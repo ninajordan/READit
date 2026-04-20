@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
 import ChannelForm from "../components/ChannelForm.jsx";
 import {
@@ -78,7 +77,6 @@ export default function EditChannelPage() {
           ) : null}
         </main>
       </div>
-      <Footer />
     </div>
   );
 }

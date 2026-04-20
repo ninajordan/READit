@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
 import ChannelForm from "../components/ChannelForm.jsx";
 import { createChannel } from "../features/channels/channelsApi.js";
@@ -41,7 +40,6 @@ export default function CreateChannelPage() {
           />
         </main>
       </div>
-      <Footer />
     </div>
   );
 }

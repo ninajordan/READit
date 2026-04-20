@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // pj 4 improvement nav to channel after post creation
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
 import PostStack from "../components/PostStack.jsx";
 import PostModal from "../components/PostModal.jsx";
@@ -229,7 +228,6 @@ export default function ChannelDetailPage() {
           ) : null}
         </main>
       </div>
-       {/* <Footer /> */}
       <PostModal postID={activePostID} onClose={() => setActivePostID(null)} />
     </div>
   );

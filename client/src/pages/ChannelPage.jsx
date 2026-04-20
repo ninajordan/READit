@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx"; // footer removed p.4 change
 import ProfileCard from "../components/ProfileCard.jsx";
 import { useChannels } from "../features/channels/useChannels.js";
 import "./ChannelPage.css";
@@ -67,7 +66,6 @@ export default function ChannelPage() {
           ) : null}
         </main>
       </div>
-       {/* <Footer /> */} 
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx"; // footer removed p.4 change
 import ProfileCard from "../components/ProfileCard.jsx";
 import PostGrid from "../components/PostGrid.jsx";
 import PostModal from "../components/PostModal.jsx";
@@ -73,7 +72,6 @@ export default function ProfilePage() {
           ) : null}
         </main>
       </div>
-      {/* <Footer /> */}
       <PostModal postID={activePostID} onClose={() => setActivePostID(null)} />
     </div>
   );
