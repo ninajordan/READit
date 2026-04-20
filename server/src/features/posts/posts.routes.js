@@ -13,4 +13,8 @@ router.get("/get-created-posts/:userID", postController.userCreatedPosts);
 // Create a Post
 router.post("/create-a-post", postController.createPost);
 
+//Delete a post
+router.delete("/delete-post", postController.deletePosts);
+router.delete("/delete-post/:postID", postController.deletePosts);
+
 export default router;

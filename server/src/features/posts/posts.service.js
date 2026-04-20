@@ -243,6 +243,37 @@ export async function likedPosts(userID) {
   }
 }
 
+export async function createdPosts(userID) {
+  try {
+    const db = getDatabase();
+
+    const user = await db.collection("users").findOne({ userID });
+    if (user === null) {
+      return { error: true, status: 404 };
+    }
+
+    const userCreatedPosts = await db
+      .collection("posts")
+      .find({ posterID: userID })
+      .sort({ postID: -1 })
+      .toArray();
+
+    for (let i = 0; i < userCreatedPosts.length; i++) {
+      const postBody = userCreatedPosts[i].postBody;
+      userCreatedPosts[i].preview = createPreview(postBody);
+      userCreatedPosts[i].posterName = user.user_anonymity;
+    }
+
+    return {
+      posts: userCreatedPosts,
+      error: false,
+      status: 200,
+    };
+  } catch (error) {
+    return { error: true, status: 500 };
+  }
+}
+
 export async function createPostObject(title, body, poster_id, channelID) {
   try {
     const db = getDatabase();
@@ -282,56 +313,75 @@ export async function createPostObject(title, body, poster_id, channelID) {
   }
 }
 
-export async function getCreatedPosts(userID) {
+export async function deletePosts(postID, userID) {
   try {
     const db = getDatabase();
 
-    const user = await db.collection("users").findOne({ userID: userID });
-    if (user === null) {
-      return { error: true, status: 404 };
+    if (!postID) {
+      return {
+        status: 400,
+        error: true,
+        deleted: false,
+        message: "Post ID is required",
+      };
     }
 
-    const userPosts = await db
-      .collection("posts")
-      .find({ posterID: userID })
+    const posting = await db.collection("posts").findOne({ postID: postID });
+
+    if (posting === null) {
+      return {status: 404, error: true, deleted: false, message: "Post not found"}
+    }
+
+    const posterID = posting.posterID;
+
+    if (userID != posterID) {
+      return {
+        status: 401,
+        error: true,
+        deleted: false,
+        message: "User unaouthorized to delete post",
+      };
+    }
+
+    const comments = await db
+      .collection("comments")
+      .find({ postID: postID })
       .toArray();
+    const commentIDs = comments.map((comment) => comment.commentID);
 
-    console.log("[DEBUG] User Posts: ", userPosts);
-    if (userPosts.length === 0) {
-      return { posts: [], error: false, status: 200 };
+    await db.collection("comments").deleteMany({ postID: postID });
+    await db.collection("likes").deleteMany({ parentID: postID, likeType: "post" });
+
+    if (commentIDs.length > 0) {
+      await db.collection("likes").deleteMany({
+        parentID: { $in: commentIDs },
+        likeType: "comment",
+      });
     }
 
-  
-    const postIDs = new Set();
-    for (const post of userPosts) {
-      postIDs.add(post.postID);
+    const deleted = await db.collection("posts").deleteOne({ postID: postID });
+
+    if (deleted.deletedCount === 1) {
+      return {
+        status: 200,
+        error: false,
+        deleted: true,
+        message: "Deleted post",
+      };
     }
 
-    const userCreatedPosts = await db
-      .collection("posts")
-      .find({ postID: { $in: [...postIDs] } })
-      .toArray();
-    const userIDs = userCreatedPosts.map((p) => p.posterID);
-
-    const users = await db
-      .collection("users")
-      .find({ userID: { $in: userIDs } })
-      .toArray();
-    const userMap = {};
-    for (const user of users) {
-      userMap[user.userID] = user.user_anonymity;
-    }
-
-    for (let i = 0; i < userCreatedPosts.length; i++) {
-      userCreatedPosts[i]["posterName"] = userMap[userCreatedPosts[i]["posterID"]];
-    }
     return {
-      posts: userCreatedPosts,
-      error: false,
-      status: 200,
+      status: 500,
+      error: true,
+      deleted: false,
+      message: "Error in deleting post",
     };
   } catch (error) {
-    console.error("Error: ", error);
-    return { error: true, status: 500 };
+    return {
+      status: 500,
+      error: true,
+      deleted: false,
+      message: error.message,
+    };
   }
 }

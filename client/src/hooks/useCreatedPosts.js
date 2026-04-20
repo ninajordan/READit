@@ -11,7 +11,6 @@ export function useCreatedPosts(userID) {
 
     async function loadCreatedPosts() {
       if (!userID) return;
-
       try {
         setStatus("loading");
         setError("");

@@ -105,6 +105,30 @@ export async function userLikedPosts(req, res) {
   }
 }
 
+export async function userCreatedPosts(req, res) {
+  try {
+    const { userID } = req.params;
+
+    const createdPosts = await postsService.createdPosts(userID);
+    if (createdPosts.error === true && createdPosts.status === 404) {
+      return res.status(404).json({ error: true, message: "user not found" });
+    }
+
+    const posts = createdPosts.posts;
+    if (posts.length === 0) {
+      return res
+        .status(200)
+        .json({ error: false, posts: [], message: "No created posts yet" });
+    }
+
+    return res.status(200).json({ error: false, posts });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: true, message: "internal server error" });
+  }
+}
+
 export async function createPost(req, res) {
   try {
     const { postTitle, postBody, posterID, channelID } = req.body;
@@ -140,27 +164,27 @@ export async function createPost(req, res) {
   }
 }
 
-export async function userCreatedPosts(req, res) {
+export async function deletePosts(req, res) {
+  try {
+    const postID = req.params.postID || req.query.postID;
+    const { userID } = req.body;
 
-    try {
-        const { userID } = req.params;
-        const createdPosts = await postsService.getCreatedPosts(userID);
+    const postDeleted = await postsService.deletePosts(postID, userID);
 
-        if (createdPosts.error === true && createdPosts.status === 404) {
-            return res.status(404).json({ error: true, message: "user not found" });
-        }
-
-        const posts = createdPosts.posts;
-        if (posts.length === 0) {
-        return res
-            .status(200)
-            .json({ error: false, message: "No Created Posts yet" });
-        }
-
-        return res.status(200).json({ error: false, posts: posts });
-    } catch (error) {
-        return res
-          .status(500)
-          .json({ error: true, message: "internal server error" });
+    if (postDeleted.error == false && postDeleted.status == 200) {
+      res.status(200).json({
+        error: false,
+        deleted: true,
+        message: "post deleted successfully",
+      });
+    } else {
+      res.status(postDeleted.status).json({
+        error: true,
+        deleted: postDeleted.deleted,
+        message: postDeleted.message,
+      });
     }
+  } catch (error) {
+    res.status(500).json({ error: true, message: String(error) });
+  }
 }
