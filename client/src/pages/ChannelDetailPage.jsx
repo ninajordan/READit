@@ -221,6 +221,7 @@ export default function ChannelDetailPage() {
               canNext={canNext}
               onPrev={handlePrev}
               onNext={handleNext}
+              keyboardEnabled={!activePostID}
               onOpenPost={(post) => setActivePostID(post.postID)}
               onLike={handleLikePost}
               onDislike={handleDislikePost}

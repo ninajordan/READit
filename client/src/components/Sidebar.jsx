@@ -1,10 +1,50 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useChannels } from "../features/channels/useChannels.js";
+import { useGlobalShortcuts } from "../hooks/useGlobalShortcuts.js";
 import "./Sidebar.css";
 
 export default function Sidebar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const { channels, loading, error } = useChannels();
+  const pathname = location.pathname;
+
+  const isCreateFormPage =
+    pathname === "/create" ||
+    pathname === "/channels/create" ||
+    pathname.endsWith("/edit");
+  const isChannelDetailPage =
+    pathname.startsWith("/channels/") &&
+    pathname !== "/channels/create" &&
+    !pathname.endsWith("/edit");
+
+  useGlobalShortcuts([
+    {
+      combo: ["control", "shift", "c"],
+      enabled: true,
+      handler: () => navigate("/channels"),
+    },
+    {
+      combo: ["control", "shift", "p"],
+      enabled: !isCreateFormPage,
+      handler: () => navigate("/profile"),
+    },
+    {
+      combo: ["shift", "c"],
+      enabled: true,
+      handler: () => navigate("/channels/create"),
+    },
+    {
+      combo: ["shift", "p"],
+      enabled: pathname === "/" || isChannelDetailPage,
+      handler: () => {
+        if (!isChannelDetailPage) {
+          sessionStorage.removeItem("channelID");
+        }
+        navigate("/create");
+      },
+    },
+  ]);
 
   function getChannelId(channel) {
     return channel.channelID || channel._id || channel.id;

@@ -19,6 +19,12 @@ export default function CreateComment({ onSubmit, isSubmitting = false }) {
         placeholder="Post your comment"
         value={value}
         onChange={(event) => setValue(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            event.currentTarget.form?.requestSubmit();
+          }
+        }}
         disabled={isSubmitting}
       />
       <button

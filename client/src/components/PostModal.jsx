@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchPostById } from "../features/posts/postDetailApi.js";
 import { postComment } from "../features/comments/commentsApi.js";
 import { registerLike } from "../features/likes/likesApi.js";
@@ -12,6 +12,9 @@ export default function PostModal({ postID, onClose }) {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const panelRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const previouslyFocusedElementRef = useRef(null);
 
   async function loadPost() {
     try {
@@ -43,6 +46,47 @@ export default function PostModal({ postID, onClose }) {
       isActive = false;
     };
   }, [postID]);
+
+  useEffect(() => {
+    if (!postID) return;
+
+    previouslyFocusedElementRef.current = document.activeElement;
+    closeButtonRef.current?.focus();
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose?.();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panelRef.current) return;
+
+      const focusableElements = panelRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+
+      if (!focusableElements.length) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previouslyFocusedElementRef.current?.focus?.();
+    };
+  }, [onClose, postID]);
 
   function handleOverlayClick(event) {
     if (event.target === event.currentTarget) {
@@ -104,8 +148,19 @@ export default function PostModal({ postID, onClose }) {
 
   return (
     <div className="post-modal" onClick={handleOverlayClick}>
-      <div className="post-modal__panel">
-        <button type="button" className="post-modal__close" onClick={onClose}>
+      <div
+        ref={panelRef}
+        className="post-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Post details"
+      >
+        <button
+          ref={closeButtonRef}
+          type="button"
+          className="post-modal__close"
+          onClick={onClose}
+        >
           Close
         </button>
         {status === "loading" ? <p>Loading...</p> : null}

@@ -1,14 +1,30 @@
 import "./PostCard.css";
 
-export default function PostCard({ post, isActive, onSelect, action }) {
+export default function PostCard({
+  post,
+  isActive,
+  isHighlighted = false,
+  onSelect,
+  onFocus,
+  action,
+  cardRef,
+  tabIndex = 0,
+}) {
   return (
     <article
-      className={`post-card${isActive ? " post-card--active" : ""}`}
+      ref={cardRef}
+      className={`post-card${isActive ? " post-card--active" : ""}${
+        isHighlighted ? " post-card--highlighted" : ""
+      }`}
       role="button"
-      tabIndex={0}
+      tabIndex={tabIndex}
       onClick={() => onSelect?.(post)}
+      onFocus={() => onFocus?.(post)}
       onKeyDown={(event) => {
-        if (event.key === "Enter") onSelect?.(post);
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onSelect?.(post);
+        }
       }}
     >
       {action ? (

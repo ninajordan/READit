@@ -120,6 +120,12 @@ export default function CreatePostForm({ initialChannelID }) {
           setBody(event.target.value);
           setError("");
         }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            event.currentTarget.form?.requestSubmit();
+          }
+        }}
       />
       <p
         className={`create-post__counter ${

@@ -6,6 +6,10 @@ export default function PostGrid({
   onOpenPost,
   emptyMessage = "No posts yet.",
   action,
+  highlightedIndex = null,
+  indexOffset = 0,
+  onHighlightChange,
+  getCardRef,
 }) {
   if (!posts || posts.length === 0) {
     return <p className="post-grid__empty">{emptyMessage}</p>;
@@ -13,12 +17,18 @@ export default function PostGrid({
 
   return (
     <div className="post-grid">
-      {posts.map((post) => (
+      {posts.map((post, index) => {
+        const absoluteIndex = indexOffset + index;
+
+        return (
         <div key={post.postID} className="post-grid__item">
           <PostCard
             post={post}
             isActive={false}
+            isHighlighted={highlightedIndex === absoluteIndex}
             onSelect={() => onOpenPost?.(post)}
+            onFocus={() => onHighlightChange?.(absoluteIndex)}
+            cardRef={getCardRef?.(absoluteIndex)}
             action={
               action
                 ? {
@@ -29,7 +39,8 @@ export default function PostGrid({
             }
           />
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

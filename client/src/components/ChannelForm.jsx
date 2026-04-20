@@ -65,6 +65,12 @@ export default function ChannelForm({
         name="channelDescription"
         value={formData.channelDescription}
         onChange={handleChange}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            event.currentTarget.form?.requestSubmit();
+          }
+        }}
         rows={4}
       />
 
