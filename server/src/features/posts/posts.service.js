@@ -66,7 +66,7 @@ export async function listAllPosts(limit = 20, start = 0) {
       metadata: {
         total: allPosts.length,
         start: start,
-        end: end,
+        end: postsToSend.length === 0 ? start : end - 1,
         limit: limit,
       },
       posts: postsToSend,
@@ -129,7 +129,7 @@ export async function listChannelPosts(channelID, limit = 20, start = 0) {
       metadata: {
         total: allPosts.length,
         start: start,
-        end: end,
+        end: postsToSend.length === 0 ? start : end - 1,
         limit: limit,
       },
       posts: postsToSend,

@@ -1,5 +1,4 @@
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
 import RegisterPanel from "../components/RegisterPanel.jsx";
 import "./RegisterPage.css";
@@ -22,7 +21,6 @@ export default function RegisterPage() {
           <RegisterPanel />
         </main>
       </div>
-      <Footer />
     </div>
   );
 }

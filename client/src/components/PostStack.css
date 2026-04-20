@@ -75,6 +75,14 @@
     opacity 0.25s ease;
 }
 
+.post-stack__card--swipe-up {
+  transform: translateY(-120%) scale(0.96);
+  opacity: 0;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
 .post-stack__actions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -96,6 +104,11 @@
 .post-stack__button--ghost {
   background: transparent;
   border: 1px solid rgba(27, 27, 27, 0.2);
+}
+
+.post-stack__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .post-stack__empty {

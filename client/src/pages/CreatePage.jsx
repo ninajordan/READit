@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";// footer removed 
 import ProfileCard from "../components/ProfileCard.jsx";
 import CreatePostForm from "../components/CreatePostForm.jsx";
 import { fetchChannelById } from "../features/channels/channelsApi.js";
@@ -51,7 +50,6 @@ export default function CreatePage() {
           <CreatePostForm initialChannelID={sessionStorage.getItem("channelID")} />
         </main>
       </div>
-      {/* <Footer /> */} 
     </div>
   );
 }

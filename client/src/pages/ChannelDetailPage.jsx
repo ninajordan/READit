@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // pj 4 improvement nav to channel after post creation
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx";
 import ProfileCard from "../components/ProfileCard.jsx";
 import PostStack from "../components/PostStack.jsx";
 import PostModal from "../components/PostModal.jsx";
@@ -98,7 +97,7 @@ export default function ChannelDetailPage() {
   }, [posts]);
 
   const canPrev = metadata.start > 0;
-  const canNext = metadata.end < metadata.total;
+  const canNext = metadata.end + 1 < metadata.total;
 
   function handlePrev() {
     if (!canPrev) return;
@@ -107,7 +106,7 @@ export default function ChannelDetailPage() {
 
   function handleNext() {
     if (!canNext) return;
-    setStart(metadata.end);
+    setStart(metadata.end + 1);
   }
 
   async function handleLikePost(post) {
@@ -229,7 +228,6 @@ export default function ChannelDetailPage() {
           ) : null}
         </main>
       </div>
-       {/* <Footer /> */}
       <PostModal postID={activePostID} onClose={() => setActivePostID(null)} />
     </div>
   );

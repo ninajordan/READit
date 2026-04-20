@@ -1,5 +1,4 @@
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx"; // footer removed p4 change
 import ProfileCard from "../components/ProfileCard.jsx";
 import LoginPanel from "../components/LoginPanel.jsx";
 import "./LoginPage.css";
@@ -18,7 +17,6 @@ export default function LoginPage() {
           <LoginPanel />
         </main>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

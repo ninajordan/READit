@@ -23,31 +23,27 @@ export default function Sidebar() {
   }
   return (
     <aside className="sidebar">
-      <div className="sidebar__top-nav">
-        <button
-          type="button"
-          className="sidebar__home"
-          onClick={() => {
-            sessionStorage.removeItem("channelID");
-            navigate("/");
-          }}
-        >
-          ⌂
-        </button>
-        <button
-          type="button"
-          className="sidebar__home sidebar__home--explore"
-          onClick={() => navigate("/channels")}
-          aria-label="Explore channels"
-          title="Explore channels"
-        >
-          #
-        </button>
-      </div>
+      <button
+        type="button"
+        className="sidebar__home"
+        onClick={() => {
+          sessionStorage.removeItem("channelID");
+          navigate("/");
+        }}
+      >
+        ⌂
+      </button>
 
       <div className="sidebar__brand">READit</div>
 
       <div className="sidebar__section">
+        <button
+          type="button"
+          className="sidebar__channels-button"
+          onClick={() => navigate("/channels")}
+        >
+          Channels
+        </button>
         <button
           type="button"
           className="sidebar__channels-button sidebar__channels-button--create"

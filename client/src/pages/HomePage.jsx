@@ -1,5 +1,4 @@
 import Sidebar from "../components/Sidebar.jsx";
-import Footer from "../components/Footer.jsx"; // footer removed p.4 change
 import ProfileCard from "../components/ProfileCard.jsx";
 import PostStack from "../components/PostStack.jsx";
 import { useEffect, useState } from "react";
@@ -22,7 +21,7 @@ export default function HomePage() {
   }, [posts]);
 
   const canPrev = metadata.start > 0;
-  const canNext = metadata.end < metadata.total;
+  const canNext = metadata.end + 1 < metadata.total;
 
   function handlePrev() {
     if (!canPrev) return;
@@ -31,7 +30,7 @@ export default function HomePage() {
 
   function handleNext() {
     if (!canNext) return;
-    setStart(metadata.end);
+    setStart(metadata.end + 1);
   }
 
   async function handleLikePost(post) {
@@ -82,8 +81,8 @@ export default function HomePage() {
     if (displayPosts.length !== 0) return;
     if (status !== "success") return;
 
-    if (metadata.end < metadata.total) {
-      setStart(metadata.end);
+    if (metadata.end + 1 < metadata.total) {
+      setStart(metadata.end + 1);
     } else if (metadata.total > 0) {
       setSeenAll(true);
     }
@@ -134,7 +133,6 @@ export default function HomePage() {
           ) : null}
         </main>
       </div>
-       {/* <Footer /> */}
       <PostModal postID={activePostID} onClose={() => setActivePostID(null)} />
     </div>
   );
