@@ -190,17 +190,17 @@ export default function ChannelDetailPage() {
             ) : null}
           </section>
           <div className="channel-detail__actions">
-          <button
-  type="button"
-  className="channel-detail__create-post"
-  onClick={() => {
-    sessionStorage.setItem("channelID", id);
-    navigate("/create");
-  }}
->
-  Create Post
-</button>
-</div>
+            <button
+              type="button"
+              className="channel-detail__create-post"
+              onClick={() => {
+                sessionStorage.setItem("channelID", id);
+                navigate("/create");
+              }}
+            >
+              Create Post
+            </button>
+          </div>
           <p className="channel-detail__meta">
             Showing {metadata.start}...{metadata.end} of {metadata.total} posts
           </p>

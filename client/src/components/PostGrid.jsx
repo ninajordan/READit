@@ -21,24 +21,24 @@ export default function PostGrid({
         const absoluteIndex = indexOffset + index;
 
         return (
-        <div key={post.postID} className="post-grid__item">
-          <PostCard
-            post={post}
-            isActive={false}
-            isHighlighted={highlightedIndex === absoluteIndex}
-            onSelect={() => onOpenPost?.(post)}
-            onFocus={() => onHighlightChange?.(absoluteIndex)}
-            cardRef={getCardRef?.(absoluteIndex)}
-            action={
-              action
-                ? {
-                    ...action,
-                    onClick: () => action.onClick?.(post),
-                  }
-                : null
-            }
-          />
-        </div>
+          <div key={post.postID} className="post-grid__item">
+            <PostCard
+              post={post}
+              isActive={false}
+              isHighlighted={highlightedIndex === absoluteIndex}
+              onSelect={() => onOpenPost?.(post)}
+              onFocus={() => onHighlightChange?.(absoluteIndex)}
+              cardRef={getCardRef?.(absoluteIndex)}
+              action={
+                action
+                  ? {
+                      ...action,
+                      onClick: () => action.onClick?.(post),
+                    }
+                  : null
+              }
+            />
+          </div>
         );
       })}
     </div>

@@ -11,8 +11,11 @@ import "./ProfilePage.css";
 
 export default function ProfilePage() {
   const userID = sessionStorage.getItem("userID");
-  const { posts: likedPosts, status: likedStatus, error: likedError } =
-    useLikedPosts(userID);
+  const {
+    posts: likedPosts,
+    status: likedStatus,
+    error: likedError,
+  } = useLikedPosts(userID);
   const {
     posts: createdPosts,
     status: createdStatus,
@@ -82,7 +85,8 @@ export default function ProfilePage() {
     {
       combo: ["enter"],
       enabled: !activePostID && allPosts.length > 0,
-      handler: () => setActivePostID(allPosts[highlightedIndex]?.postID || null),
+      handler: () =>
+        setActivePostID(allPosts[highlightedIndex]?.postID || null),
     },
     {
       combo: ["control", "shift", "d"],

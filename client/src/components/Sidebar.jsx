@@ -92,15 +92,15 @@ export default function Sidebar() {
           Create Channel
         </button>
         <button
-  type="button"
-  className="sidebar__channels-button"
-  onClick={() => {
-    sessionStorage.removeItem("channelID");
-    navigate("/create");
-  }}
->
-  Create Post
-</button>
+          type="button"
+          className="sidebar__channels-button"
+          onClick={() => {
+            sessionStorage.removeItem("channelID");
+            navigate("/create");
+          }}
+        >
+          Create Post
+        </button>
         {loading ? (
           <p className="sidebar__status">Loading channels...</p>
         ) : null}

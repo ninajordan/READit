@@ -20,9 +20,7 @@ export default function CreatePage() {
         const channel =
           response?.channelData?.channel || response?.channel || response;
         setChannelName(channel?.channelName || "");
-      } catch {
-        
-      }
+      } catch {}
     }
 
     loadChannelName();
@@ -47,7 +45,9 @@ export default function CreatePage() {
           {channelName ? (
             <p className="create-page__note">Adding post to #{channelName}</p>
           ) : null}
-          <CreatePostForm initialChannelID={sessionStorage.getItem("channelID")} />
+          <CreatePostForm
+            initialChannelID={sessionStorage.getItem("channelID")}
+          />
         </main>
       </div>
     </div>
