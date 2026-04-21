@@ -1,5 +1,9 @@
 .sidebar {
-  background: linear-gradient(180deg, var(--panel-dark) 0%, var(--panel-dark-deep) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--panel-dark) 0%,
+    var(--panel-dark-deep) 100%
+  );
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-on-dark);
   display: flex;

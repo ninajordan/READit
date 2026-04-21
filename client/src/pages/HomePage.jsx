@@ -99,9 +99,7 @@ export default function HomePage() {
               <h1 className="home-page__title">
                 Today&apos;s anonymous stories
               </h1>
-              <p className="home-page__subtitle">
-              All channels · Latest posts
-              </p>
+              <p className="home-page__subtitle">All channels · Latest posts</p>
             </div>
             <p className="home-page__meta">
               Showing {metadata.start} to {metadata.end} of {metadata.total}{" "}

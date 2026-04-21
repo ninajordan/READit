@@ -22,7 +22,9 @@
 }
 
 .post-card--highlighted {
-  box-shadow: 0 0 0 3px rgba(47, 63, 86, 0.22), 0 35px 60px rgba(15, 23, 40, 0.22);
+  box-shadow:
+    0 0 0 3px rgba(47, 63, 86, 0.22),
+    0 35px 60px rgba(15, 23, 40, 0.22);
   transform: translateY(-2px);
 }
 
