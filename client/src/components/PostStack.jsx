@@ -46,7 +46,9 @@ export default function PostStack({
   const canSkip = hasPosts && index < posts.length - 1 && !swipeDirection;
   const canUsePrevArrow = typeof onPrev === "function" ? canPrev : index > 0;
   const canUseNextArrow =
-    typeof onNext === "function" ? canNext : hasPosts && index < posts.length - 1;
+    typeof onNext === "function"
+      ? canNext
+      : hasPosts && index < posts.length - 1;
 
   function goNext() {
     if (!posts || index >= posts.length - 1) return;

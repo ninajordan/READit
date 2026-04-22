@@ -10,14 +10,14 @@ export default function CreateChannelPage() {
 
   async function handleCreateChannel(channelData) {
     const response = await createChannel(channelData);
-  
+
     const channelId =
       response?.channel?.channelID ||
       response?.channel?._id ||
       response?.channel?.id;
-  
+
     if (!channelId) return;
-  
+
     sessionStorage.setItem("channelID", channelId);
     navigate(`/channels/${channelId}`);
   }

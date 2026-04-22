@@ -329,7 +329,12 @@ export async function deletePosts(postID, userID) {
     const posting = await db.collection("posts").findOne({ postID: postID });
 
     if (posting === null) {
-      return {status: 404, error: true, deleted: false, message: "Post not found"}
+      return {
+        status: 404,
+        error: true,
+        deleted: false,
+        message: "Post not found",
+      };
     }
 
     const posterID = posting.posterID;
@@ -350,7 +355,9 @@ export async function deletePosts(postID, userID) {
     const commentIDs = comments.map((comment) => comment.commentID);
 
     await db.collection("comments").deleteMany({ postID: postID });
-    await db.collection("likes").deleteMany({ parentID: postID, likeType: "post" });
+    await db
+      .collection("likes")
+      .deleteMany({ parentID: postID, likeType: "post" });
 
     if (commentIDs.length > 0) {
       await db.collection("likes").deleteMany({
