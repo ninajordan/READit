@@ -159,6 +159,13 @@ The full design document (project description, user personas, user stories, and 
 
 ---
 
+## Reports
+
+- 📄 **Usability Study Report**: [View PDF](<Usability%20Study%20Report%20-%20%20READit.pdf>)
+- 🔎 **Lighthouse / PageSpeed Insights report**: [View report](https://pagespeed.web.dev/analysis/https-rea-dit-vercel-app/55rvj6ej1o?form_factor=desktop&category=performance&category=accessibility&category=best-practices&category=seo&hl=en-GB&utm_source=lh-chrome-ext)
+
+---
+
 ## Licence
 
 This project is licensed under the MIT License.

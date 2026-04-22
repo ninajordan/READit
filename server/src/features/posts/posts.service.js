@@ -2,21 +2,37 @@ import { getDatabase } from "../../config/db.js";
 
 async function getNextPostID() {
   const db = getDatabase();
+  // `postID` is stored as a string, so a plain `.sort({ postID: -1 })` is
+  // lexicographic and can break once IDs reach different string lengths
+  // (e.g. "1000" vs "999"). Sort by numeric value instead.
   const lastPost = await db
     .collection("posts")
-    .find({})
-    .sort({ postID: -1 })
-    .limit(1)
+    .aggregate([
+      { $match: { postID: { $type: "string" } } },
+      {
+        $addFields: {
+          postIdNum: {
+            $convert: { input: "$postID", to: "int", onError: -1, onNull: -1 },
+          },
+        },
+      },
+      { $sort: { postIdNum: -1 } },
+      { $limit: 1 },
+      { $project: { postID: 1, postIdNum: 1 } },
+    ])
     .toArray();
 
   if (lastPost.length === 0) {
-    return "001";
+    return "00001";
   }
 
-  const lastIdNumber = parseInt(lastPost[0].postID, 10);
+  const lastIdNumber =
+    Number.isFinite(lastPost[0].postIdNum) && lastPost[0].postIdNum >= 0
+      ? lastPost[0].postIdNum
+      : parseInt(lastPost[0].postID, 10) || 0;
   const incrementedId = lastIdNumber + 1;
 
-  return incrementedId.toString().padStart(3, "0");
+  return incrementedId.toString().padStart(5, "0");
 }
 
 function createPreview(text) {
