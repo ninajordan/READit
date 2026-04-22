@@ -91,38 +91,37 @@ When a post is open in the modal:
 
 ---
 
-## Instructions to use and enjoy READit as a user and screenshots
+## Instructions to use and enjoy READit as a user and screenshots 
 
 ### Register & login
 
-![register](images/register.png)
+![register](images/Register_user.png)
 
 The first page you will see is the login or register page, if it is your first time please register with name, username and password. Then on returning visits you can remember your username and password to login.
 
-![Anon](images/anon.png)
+![Homepage](images/Homepage.png)
 
-Then you will be on our annonomyus posts page you can start swiping or go to channels button located underneath READIT on the black side bar to view all channels. Select/click the channel that most intreests you. once on this channel posts will appear you can read choose to like, dislike or comment. Like by pressing orange like button this will save this post to your profile.
+Then you will be on our Homepage you can start by clicking like or dislike or skip on the post on this feed. These posts are all of the lastest post acrros all the channels/topics on READit. The arrows scroll between groups of posts not for indivual posts. Avoid uses these untill your ready for the next batch.  Here you can also see the Side bar view where you can scroll though channels chose one and view/create posts on that specific channel. 
 
-![Channel](images/channel.png)
+![post_in_channel2](images/post_in_channel2.png)
+![post_in_channel1](images/post_in_channel1.png)
+You can also click the channels banner for the same fununality as the sidebar from alternate route and with inhanced visual channel display. You can click create channel button from the side bar to create a new topic for dissusion on ReadIt.
+![create_channel](images/create_channel.png)
+
+
+ You can also create a post from the side bar. It will show you a drop down menu of channels to chose from. Select the one that matches your idea the best. 
+![postsidebar2](images/postsidebar2.png)
+![post_sidebar](images/post_sidebar.png)
+
 
 ### Comments
+ Next Select/click the channel that most intreests you. once on this channel posts will appear you can read choose to like, dislike or comment. To comment click into the post where you can then view others users comments on the post or comment your self. 
 
-![Comment Before](images/comment_before.png)
-![Comment After](images/comment_after.png)
-![Liked Posts](images/liked_posts.png)
+![Post](images/Post.png)
 
+From Anywhere on Readit, Can you navigate to your profile page, by clicking the tan profile button at the top of the page. From there youll find your profile. This page displays the post you have created and the post you have engaged with below. 
+![Profile_page](images/Profile_page.png)
 
-Comment on a post by clicking the comment button write your comment and click "post". now your comment appears under posts, you can also view your profile under liked posts and find your comment there.
-
-### Create posts/channels
-
-![Posts](images/posts.png)
-
-You can create your own posts by first selecting channel, clicking the footer button create, it make a form where you can add a title and body of your posts
-
-![New Channel](images/new_channel.png)
-
-You can also create new channels using the blackside bar button "create channel"
 
 So please create channels, posts and comments the READit community is ready to hear your thoughts and opintions
 
@@ -216,3 +215,5 @@ But the right column contains Channels. Each of the channels are shown as cards 
 The channel card itself is divided into 4 rows. The first row contains the channel banner image. The second row contains Channel name which is presented with a # such
 
 All generated content was reviewed, edited, and integrated manually.
+
+
