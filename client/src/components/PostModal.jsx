@@ -31,21 +31,31 @@ export default function PostModal({ postID, onClose }) {
   }
 
   useEffect(() => {
-    let isActive = true;
+  let cancelled = false;
 
-    async function guardedLoad() {
-      if (!isActive) return;
-      await loadPost();
+  async function load() {
+    try {
+      setStatus("loading");
+      setError("");
+      const data = await fetchPostById(postID);
+      if (cancelled) return;          // guard AFTER await
+      setPost(data.postData?.post || null);
+      setComments(data.postData?.comments || []);
+      setStatus("success");
+    } catch (err) {
+      if (cancelled) return;          // guard AFTER await
+      setStatus("error");
+      setError(err.message || "Failed to load post");
     }
+  }
 
-    if (postID) {
-      guardedLoad();
-    }
+  if (postID) load();
+  return () => { cancelled = true; };
+}, [postID]);
 
-    return () => {
-      isActive = false;
-    };
-  }, [postID]);
+//  The isActive flag is checked before loadPost() runs, 
+// but loadPost itself doesn't respect it. If the component unmounts mid-fetch, 
+// setPost, setComments, and setStatus fire on an unmounted component.
 
   useEffect(() => {
     if (!postID) return;
